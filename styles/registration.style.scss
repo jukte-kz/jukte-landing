@@ -1,0 +1,153 @@
+.registration-main {
+  .text-warning {
+    color: #ffffff;
+  }
+  padding: 32px 16px;
+  h1 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+  }
+  p {
+    color: #404040;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+    span {
+      color: #4F52FF;
+    }
+  }
+  button[role='tab'] {
+    width: 50%;
+    &[aria-selected='false'] {
+      color: #262626;
+      border-color: #262626;
+    }
+    &[aria-selected='true'] {
+      color: #4F52FF;
+      border-color: #4F52FF;
+    }
+  }
+  .radio-button-container {
+    input {
+      color: #4F52FF;
+    }
+  }
+}
+
+.success-container {
+  p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+    color: #18BB4F;
+  }
+  .success-animation {
+    width: 80vw;
+  }
+  .checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #4bb71b;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0 0 0 #4bb71b;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    position:relative;
+    top: 5px;
+    right: 5px;
+    margin: 0 auto;
+  }
+  .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #4bb71b;
+    fill: #fff;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+
+  }
+  .checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  }
+  @keyframes stroke {
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes scale {
+    0%, 100% {
+      transform: none;
+    }
+    50% {
+      transform: scale3d(1.1, 1.1, 1);
+    }
+  }
+  @keyframes fill {
+    100% {
+      box-shadow: inset 0 0 0 30px #4bb71b;
+    }
+  }
+}
+.registration-form {
+  .input-container {
+    label {
+      color: #808080;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.12px;
+      font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+    }
+    input {
+    }
+    margin-bottom: 2rem;
+  }
+  button {
+    height: 48px;
+    min-width: 48px;
+    background-color: #4F52FF;
+    width: 100%;
+    border-radius: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -0.12px;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+    p {
+      color: #fff;
+    }
+    &:disabled {
+      background-color: rgba(128,128,128,0.16);
+      p {
+        color: rgba(128,128,128,0.5) !important;
+      }
+    }
+  }
+  h2 {
+    color: #C92140;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    font-feature-settings: 'cv03' on, 'cv04' on, 'cv09' on;
+  }
+}

@@ -1,0 +1,11 @@
+.link-block {
+  background-color: rgba(37, 57, 215, 0.1);
+  p {
+    color: rgba(0, 0, 0, 0.5);
+  }
+  &:hover {
+    p {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@400;600;700&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.violet-text {
+  color: #4F52FF;
+}
+
+::placeholder {
+  color: #1A1A1A!important;
+  opacity: 1!important;
+}
+
+.disabled\:opacity-50:disabled {
+  opacity: 1!important;
+}
+
+.name__placeholder {
+  color: #1A1A1A!important;
+  opacity: 1!important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#modal-width {
+  .bg-white {
+    width: 100%;
+  }
+}
+.react-datepicker__day--keyboard-selected, .react-datepicker__day--in-range {
+  background-color: #4F52FF!important;
+}
+.react-datepicker__close-icon {
+  right: 8px!important;
+}
+.react-datepicker__close-icon::after {
+  background-color: #4F52FF!important;
+  cursor: pointer!important;
+  color: #fff!important;
+  border-radius: 50%!important;
+  height: 18px!important;
+  width: 18px!important;
+  padding: 0 0 2px 0!important;
+  font-size: 12px!important;
+  line-height: 0!important;
+  text-align: center!important;
+  vertical-align: middle!important;
+  content: "×"!important;
+  display: flex!important;
+  align-items: center!important;
+  justify-content: center!important;
+}

@@ -1,0 +1,23 @@
+.myCard-container {
+  img {
+    width: 24px;
+    height: 24px;
+  }
+  h2 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 18px;
+    font-feature-settings: 'ss01' on, 'cv04' on, 'cv09' on, 'cv03' on;
+  }
+  .link-button {
+    background-color: #4F52FF;
+    color: #fff;
+    height: 32px;
+    display: flex;
+    align-items: center;
+  }
+  a {
+    text-decoration: none!important;
+  }
+}
