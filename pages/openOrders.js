@@ -89,6 +89,7 @@ export default function MyOrders() {
                                                     setOwnerId(data._id);
                                                     toAskUser();
                                                 }}
+                                                transfer={data.transfer}
                                                 key={index}
                                                 shipment={data.loadType}
                                                 cub={data.cubProduct}

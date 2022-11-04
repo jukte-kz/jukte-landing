@@ -113,6 +113,7 @@ export default function MyOrders() {
                                                         role={userInfo.role}
                                                         phone={data.ownerPhone}
                                                         id={data._id}
+                                                        transfer={data.transfer}
                                                     />
                                                 </>
                                             )
@@ -126,6 +127,7 @@ export default function MyOrders() {
                                         myOrders.slice(0,6).map((data, index) => {
                                             return (
                                                 <DriverCard
+                                                    transfer={data.transfer}
                                                     key={index}
                                                     shipment={data.loadType}
                                                     cub={data.cubProduct}

@@ -21,6 +21,12 @@ export default function createDriverOrders() {
     const cubMask = 'м3 | 999';
 
     const [product, setProduct] = useState(' ');
+    const [transfer, setTransfer] = useState('');
+    const [transfer_1, setTransfer_1] = useState('');
+    const [transfer_2, setTransfer_2] = useState('');
+    const [transfer_3, setTransfer_3] = useState('');
+    const [transfer_4, setTransfer_4] = useState('');
+    const [transfer_5, setTransfer_5] = useState('');
     const [description, setDescription] = useState('');
     const [distance, setDistance] = useState('');
     const [weight, setWeight] = useState('');
@@ -37,6 +43,7 @@ export default function createDriverOrders() {
     const [checkSendOrder, setCheckSendOrder] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showLawError, setShowLawError] = useState(false);
+    const [showTransferModal, setShowTransferModal] = useState(false);
     const [cancel, setCancel] = useState(false);
 
     const mapRef = useRef();
@@ -47,6 +54,21 @@ export default function createDriverOrders() {
     }, []);
     const onChangeProduct = useCallback((event) => {
         setProduct(event.target.value);
+    }, []);
+    const onChangeTransfer_1 = useCallback((event) => {
+        setTransfer_1(event.target.value);
+    }, []);
+    const onChangeTransfer_2 = useCallback((event) => {
+        setTransfer_2(event.target.value);
+    }, []);
+    const onChangeTransfer_3 = useCallback((event) => {
+        setTransfer_3(event.target.value);
+    }, []);
+    const onChangeTransfer_4 = useCallback((event) => {
+        setTransfer_4(event.target.value);
+    }, []);
+    const onChangeTransfer_5 = useCallback((event) => {
+        setTransfer_5(event.target.value);
     }, []);
     const onChangeWeight = useCallback((event) => {
         setWeight(event.target.value.split(' ')[2]);
@@ -98,6 +120,7 @@ export default function createDriverOrders() {
                 cubProduct: cubProduct,
                 logPrice: parseInt(logPrice.replace(/\s/g, '')),
                 distance: parseInt(distance.replace(/\s/g, '')),
+                transfer: transfer,
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
@@ -109,6 +132,15 @@ export default function createDriverOrders() {
             }
         })
     }
+
+    const handleClick = event => {
+        setShowTransferModal(!showTransferModal)
+    };
+
+    const transferEnd = useCallback(() => {
+        setTransfer(transfer_1+' '+transfer_2+' '+transfer_3+' '+transfer_4+' '+transfer_5);
+        handleClick();
+    });
 
     useEffect(() => {
         if (!cancel) {
@@ -199,6 +231,22 @@ export default function createDriverOrders() {
                                         });
                                     }
                                 }}
+                            />
+                        </div>
+                        <div className='input-container' onClick={handleClick}>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer"
+                                    value="Промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                id="transfer"
+                                type="text"
+                                value={transfer}
+                                placeholder='Заполните промежуточный пункт'
+                                required={true}
+                                sizing="lg"
                             />
                         </div>
                         <div className='input-container'>
@@ -385,6 +433,101 @@ export default function createDriverOrders() {
                 <Modal.Footer>
                     <button className='w-full redirect-button' onClick={endCreateOrder}>
                         Перейти в меню
+                    </button>
+                </Modal.Footer>
+            </Modal>
+            <Modal
+                show={!showTransferModal}
+                position="center"
+                id='modalTransfer'
+            >
+                <Modal.Body>
+                    <div className='w-full success-container'>
+                        <div className='input-container mb-4'>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer1"
+                                    value="Введите первый промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                onChange={onChangeTransfer_1}
+                                id="transfer1"
+                                value={transfer_1}
+                                placeholder=''
+                                required={true}
+                                sizing="lg"
+                            />
+                        </div>
+                        <div className='input-container mb-4'>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer2"
+                                    value="Введите второй промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                onChange={onChangeTransfer_2}
+                                id="transfer2"
+                                value={transfer_2}
+                                placeholder=''
+                                required={true}
+                                sizing="lg"
+                            />
+                        </div>
+                        <div className='input-container mb-4'>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer3"
+                                    value="Введите третий промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                onChange={onChangeTransfer_3}
+                                id="transfer3"
+                                value={transfer_3}
+                                placeholder=''
+                                required={true}
+                                sizing="lg"
+                            />
+                        </div>
+                        <div className='input-container mb-4'>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer4"
+                                    value="Введите четвертый промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                onChange={onChangeTransfer_4}
+                                id="transfer4"
+                                value={transfer_4}
+                                placeholder=''
+                                required={true}
+                                sizing="lg"
+                            />
+                        </div>
+                        <div className='input-container'>
+                            <div className="mb-2 block">
+                                <Label
+                                    htmlFor="transfer5"
+                                    value="Введите пятый промежуточный пункт"
+                                />
+                            </div>
+                            <TextInput
+                                onChange={onChangeTransfer_5}
+                                id="transfer5"
+                                value={transfer_5}
+                                placeholder=''
+                                required={true}
+                                sizing="lg"
+                            />
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className='w-full redirect-button w-full' onClick={transferEnd}>
+                        Сохранить
                     </button>
                 </Modal.Footer>
             </Modal>

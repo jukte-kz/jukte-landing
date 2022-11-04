@@ -122,7 +122,7 @@ export default function Home () {
 
     return (
         <div>
-            <Header removeUrl='/login' text='Выйти'></Header>
+            <Header removeUrl='/login' text='Выйти' mainHeader={true}></Header>
             {loading ? (
                 <div className='p-4'>
                     <div className='mb-4'>
@@ -188,6 +188,7 @@ export default function Home () {
                                         return (
                                             data.ownerRole === 'logistician' ? (
                                                 <MyCard
+                                                    transfer={data.transfer}
                                                     key={index}
                                                     shipment={data.loadType}
                                                     cub={data.cubProduct}
@@ -209,6 +210,7 @@ export default function Home () {
                                                 />
                                             ) : (
                                                 <DriverCard
+                                                    transfer={data.transfer}
                                                     key={index}
                                                     shipment={data.loadType}
                                                     cub={data.cubProduct}
@@ -260,6 +262,7 @@ export default function Home () {
                                                         toAskUser();
                                                     }}
                                                     key={index}
+                                                    transfer={data.transfer}
                                                     shipment={data.loadType}
                                                     cub={data.cubProduct}
                                                     logPrice={data.logPrice}
@@ -327,6 +330,7 @@ export default function Home () {
                                                     phone={data.ownerPhone}
                                                     product={data.product}
                                                     detail={data.detail}
+                                                    transfer={data.transfer}
                                                 />
                                             )
                                         })

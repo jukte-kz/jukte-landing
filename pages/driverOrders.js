@@ -87,6 +87,7 @@ export default function driverOrders() {
                                                     toAskUser
                                                     matchOrder(data._id)
                                                 }}
+                                                transfer={data.transfer}
                                                 cub={data.cubProduct}
                                                 key={index}
                                                 shipment={data.loadType}

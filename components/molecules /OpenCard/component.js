@@ -4,7 +4,7 @@ import {useState} from "react";
 
 export default function OpenCard({
                                      shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                     description, status, phone, role, id, onClick, detail
+                                     description, status, phone, role, id, onClick, detail, transfer
 }) {
     const [show, setShow] = useState(false);
     return (
@@ -17,7 +17,7 @@ export default function OpenCard({
                     </div>
                     <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/distance.svg" alt=""/>
-                        <p className='font-bold'>{from} - {to}</p>
+                        <p className='font-bold'>{from} - {transfer === undefined ? (''):(transfer + ' - ')} {to}</p>
                     </div>
                 </div>
             </div>
