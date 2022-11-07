@@ -1,12 +1,11 @@
 import Header from "../components/atoms/Header/component";
-import {Label, Modal, Spinner, Textarea, TextInput} from "flowbite-react";
+import {Label, Modal, Textarea, TextInput} from "flowbite-react";
 import InputMask from "react-input-mask";
 import {useCallback, useEffect, useRef, useState} from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import qs from "qs";
 import DatePicker from 'react-datepicker';
-import MaskedInput from 'react-maskedinput';
 import Select from 'react-select';
 import React from "react";
 import Script from "next/script";
@@ -15,6 +14,8 @@ import { ru } from 'date-fns/locale';
 import {transportUp} from "../public/assets/data/transportUp";
 import {transport} from "../public/assets/data/transportType";
 import moment from "moment";
+import '../utils/i18next';
+import { useTranslation } from "react-i18next";
 
 export default function createDriverOrders() {
     const weightMask = 'тонн | 99';
@@ -48,6 +49,7 @@ export default function createDriverOrders() {
 
     const mapRef = useRef();
     const router = useRouter();
+    const { t } = useTranslation();
 
     const onChangeDescription = useCallback((event) => {
         setDescription(event.target.value);
@@ -187,9 +189,9 @@ export default function createDriverOrders() {
 
     return (
         <div>
-            <Header removeUrl='/home' text='На главную' />
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}/>
             <div className='settings-main py-6 px-4'>
-                <h1>Создать заявку</h1>
+                <h1>{t("createOrders.title")}</h1>
                 <hr className='mt-4' />
                 <form className='flex flex-col mt-4 login-form'>
                     <div className='mb-auto'>
@@ -237,14 +239,14 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer"
-                                    value="Промежуточный пункт"
+                                    value={t("createOrders.transfer")}
                                 />
                             </div>
                             <TextInput
                                 id="transfer"
                                 type="text"
                                 value={transfer}
-                                placeholder='Заполните промежуточный пункт'
+                                placeholder={t("createOrders.transfer")}
                                 required={true}
                                 sizing="lg"
                             />
@@ -253,7 +255,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="desc"
-                                    value="Детали перевозки"
+                                    value={t("createOrders.detail")}
                                 />
                             </div>
                             <Textarea value={product} onChange={onChangeProduct} />
@@ -262,7 +264,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="surname"
-                                    value="Выберите дату отправления"
+                                    value={t("createOrders.date")}
                                 />
                             </div>
                             <DatePicker
@@ -287,12 +289,12 @@ export default function createDriverOrders() {
                         </div>
                         <div className='input-container'>
                             <div className='mb-2 block'>
-                                <Label htmlFor="transport" value='Выберите тип погрузки' />
+                                <Label htmlFor="transport" value={t("createOrders.upTransport")} />
                             </div>
                             <Select
                                 className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2"
                                 classNamePrefix="name"
-                                placeholder='Выберите тип погрузки'
+                                placeholder={t("createOrders.upTransport")}
                                 options={transportUp}
                                 onChange={onChangeSelect}
                                 isSearchable={false}
@@ -302,7 +304,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="weight"
-                                    value="Вес груза"
+                                    value={t("createOrders.weight")}
                                 />
                             </div>
                             <InputMask value={weight} maskChar={null} onChange={onChangeWeight} mask={weightMask}>
@@ -322,7 +324,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="cubProduct"
-                                    value="Кубометр груза"
+                                    value={t("createOrders.cubometr")}
                                 />
                             </div>
                             <InputMask value={cubProduct} maskChar={null} onChange={onChangeCubProduct} mask={cubMask}>
@@ -343,7 +345,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="distance"
-                                    value="Расстояние"
+                                    value={t("createOrders.distance")}
                                 />
                             </div>
                             <TextInput
@@ -360,7 +362,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="desc"
-                                    value="Время в пути"
+                                    value={t("createOrders.time")}
                                 />
                             </div>
                             <TextInput
@@ -378,7 +380,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="price"
-                                    value="Цена"
+                                    value={t("createOrders.price")}
                                 />
                             </div>
                             <TextInput
@@ -394,7 +396,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="price"
-                                    value="Цена за услуги логиста"
+                                    value={t("createOrders.priceLogistician")}
                                 />
                             </div>
                             <TextInput
@@ -409,10 +411,10 @@ export default function createDriverOrders() {
                     </div>
                 </form>
                 <button type='button' disabled={!checkCalc} className='flex items-center settings-button px-4 mt-4' onClick={calcPrice}>
-                    <p className="w-full">Посчиатать</p>
+                    <p className="w-full">{t("createOrders.calc")}</p>
                 </button>
                 <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={sendOrderData}>
-                    <p className="w-full">Создать заявку</p>
+                    <p className="w-full">{t("createOrders.confirmOrder")}</p>
                 </button>
             </div>
             <Modal
@@ -421,7 +423,7 @@ export default function createDriverOrders() {
             >
                 <Modal.Body>
                     <div className='w-full success-container'>
-                        <p className='text-center'>Заявка создана успешно!</p>
+                        <p className='text-center'>{t("createOrders.orderSuccess")}</p>
                         <div className="success-animation mt-6">
                             <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                                 <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -432,22 +434,25 @@ export default function createDriverOrders() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='w-full redirect-button' onClick={endCreateOrder}>
-                        Перейти в меню
+                        {t("home.mainPage")}
                     </button>
                 </Modal.Footer>
             </Modal>
             <Modal
-                show={!showTransferModal}
+                show={showTransferModal}
                 position="center"
                 id='modalTransfer'
             >
                 <Modal.Body>
+                    <button className='mb-4' onClick={handleClick}>
+                        <img src="/assets/icon/left-arrow.svg" alt=""/>
+                    </button>
                     <div className='w-full success-container'>
                         <div className='input-container mb-4'>
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer1"
-                                    value="Введите первый промежуточный пункт"
+                                    value={t("createOrders.transfer")+" 1"}
                                 />
                             </div>
                             <TextInput
@@ -463,7 +468,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer2"
-                                    value="Введите второй промежуточный пункт"
+                                    value={t("createOrders.transfer")+" 2"}
                                 />
                             </div>
                             <TextInput
@@ -479,7 +484,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer3"
-                                    value="Введите третий промежуточный пункт"
+                                    value={t("createOrders.transfer")+" 3"}
                                 />
                             </div>
                             <TextInput
@@ -495,7 +500,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer4"
-                                    value="Введите четвертый промежуточный пункт"
+                                    value={t("createOrders.transfer")+" 4"}
                                 />
                             </div>
                             <TextInput
@@ -511,7 +516,7 @@ export default function createDriverOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="transfer5"
-                                    value="Введите пятый промежуточный пункт"
+                                    value={t("createOrders.transfer")+" 5"}
                                 />
                             </div>
                             <TextInput
@@ -527,7 +532,7 @@ export default function createDriverOrders() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='w-full redirect-button w-full' onClick={transferEnd}>
-                        Сохранить
+                        {t("home.save")}
                     </button>
                 </Modal.Footer>
             </Modal>

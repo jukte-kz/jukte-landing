@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import {Modal, Pagination, Spinner} from "flowbite-react";
 import OpenCard from "../components/molecules /OpenCard/component";
 import qs from "qs";
+import {useTranslation} from "react-i18next";
+import '../utils/i18next';
 
 export default function MyOrders() {
     const [openOrders, setOpenOrders] = useState(Array);
@@ -12,6 +14,8 @@ export default function MyOrders() {
     const [loading, setLoading] = useState(true);
     const [showAskUser, setShowAskUser] = useState(false);
     const [ownerId, setOwnerId] = useState('');
+
+    const { t } = useTranslation();
 
     const toAskUser = () => {
         setShowAskUser(!showAskUser);
@@ -63,12 +67,12 @@ export default function MyOrders() {
 
     return (
         <div className='myOrders-container'>
-            <Header removeUrl='/home' text='На главную'></Header>
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}></Header>
             <div className='p-4 pb-2'>
                 <div className='flex w-full justify-between items-center'>
-                    <h2>Открыте заявки</h2>
+                    <h2>{t("home.openOrder")}</h2>
                     <div className="inline-flex shrink-0 items-center justify-center rounded bg-blue-50">
-                        <p className='p-2'>Количество: {openOrders.length}</p>
+                        <p className='p-2'>{t("home.totalOrder")} {openOrders.length}</p>
                     </div>
                 </div>
                 {loading ? (
@@ -113,7 +117,7 @@ export default function MyOrders() {
                                 }
                             </div>
                         ) : (
-                            <p className='mt-4'>На данный момент свободных заявок нет</p>
+                            <p className='mt-4'>{t("home.noOpenOrders")}</p>
                         )}
                     </div>
                 )}

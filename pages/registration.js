@@ -9,6 +9,8 @@ import {useRouter} from "next/router";
 import {transport} from "../public/assets/data/transportType";
 import Select from "react-select";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
+import '../utils/i18next';
 
 export default function Registration () {
     const phoneMask = '+7-(999)-999-99-99';
@@ -32,6 +34,7 @@ export default function Registration () {
     const [showTeleErr, setShowTeleErr] = useState(false);
 
     const router = useRouter();
+    const { t } = useTranslation();
 
     const onChangePhone = useCallback((event) => {
         setPhone(event.target.value);
@@ -135,18 +138,17 @@ export default function Registration () {
 
     return (
         <div>
-            <Header removeUrl='/' />
+            <Header removeUrl='/' mainHeader={true} />
             <div className='registration-main'>
-                <h1>Регистрация пользователя</h1>
+                <h1>{t("registration.title")}</h1>
                 <p className='mt-2 mb-6'>
-                    Введите данные для регистрации в <span>Jukte.kz</span>
+                    {t("registration.desc")} <span>Jukte.kz</span>
                 </p>
                 <div className='mt-6 p-4 rounded flex items-center bg-[#4F52FF]'>
                     <img src="/assets/icon/warning.svg" alt=""/>
                     <div>
                         <p className='ml-4 text-warning'>
-                            Внимание! ИИН вводятся один раз!
-                            Просим вас вводить данные <b>корректно</b>.
+                            {t("registration.warning")} <b>{t("registration.warningBold")}</b>.
                         </p>
                     </div>
                 </div>
@@ -156,7 +158,7 @@ export default function Registration () {
                             <input id="default-checkbox" type="checkbox" value=""
                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                             <label htmlFor="bordered-radio-0"
-                                   className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">Я даю свое согласие на обработку личных данных</label>
+                                   className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">{t("registration.confirm")}</label>
                         </div>
                     </div>
                 </div>
@@ -164,7 +166,7 @@ export default function Registration () {
                     <div className="block px-4">
                         <Label
                             htmlFor="role"
-                            value="Выберите свою деятельность"
+                            value={t("registration.role")}
                         />
                     </div>
                     <div className='flex gap-2 radio-button-container'>
@@ -172,13 +174,13 @@ export default function Registration () {
                             <input onChange={onChangeRole} id="bordered-radio-1" type="radio" value="logistician" name="bordered-radio"
                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label htmlFor="bordered-radio-1"
-                                   className="py-4 ml-2 w-full text-md font-medium dark:text-gray-300">Грузоотправитель</label>
+                                   className="py-4 ml-2 w-full text-md font-medium dark:text-gray-300">{t("registration.logistician")}</label>
                         </div>
                         <div className="w-1/2 flex items-center pl-4">
                             <input onChange={onChangeRole} id="bordered-radio-2" type="radio" value="driver" name="bordered-radio"
                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label htmlFor="bordered-radio-2"
-                                   className="py-4 ml-2 w-full text-md font-medium dark:text-gray-300">Грузоперевозчик</label>
+                                   className="py-4 ml-2 w-full text-md font-medium dark:text-gray-300">{t("registration.driver")}</label>
                         </div>
                     </div>
                 </div>
@@ -188,13 +190,13 @@ export default function Registration () {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="name"
-                                    value="Введите свое имя"
+                                    value={t("registration.nameLabel")}
                                 />
                             </div>
                             <TextInput
                                 id="name"
                                 type="text"
-                                placeholder="Имя"
+                                placeholder={t("registration.name")}
                                 required={true}
                                 sizing="lg"
                                 value={name}
@@ -205,13 +207,13 @@ export default function Registration () {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="surname"
-                                    value="Введите свою фамилию"
+                                    value={t("registration.surnameLabel")}
                                 />
                             </div>
                             <TextInput
                                 id="surname"
                                 type="text"
-                                placeholder="Фамилия"
+                                placeholder={t("registration.surname")}
                                 required={true}
                                 sizing="lg"
                                 value={surname}
@@ -222,7 +224,7 @@ export default function Registration () {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="iin"
-                                    value="Введите ИИН (для нерезидентов Казахстана номер документа)"
+                                    value={t("registration.iinLabel")}
                                 />
                             </div>
                                 <TextInput
@@ -239,7 +241,7 @@ export default function Registration () {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="phone"
-                                    value="Введите номер телефона"
+                                    value={t("registration.phoneLabel")}
                                 />
                             </div>
                             <InputMask value={phone} maskChar={null} onChange={onChangePhone} mask={phoneMask}>
@@ -259,7 +261,7 @@ export default function Registration () {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="password"
-                                    value="Придумайте 6-значный пин-код"
+                                    value={t("registration.passwordLabel")}
                                 />
                             </div>
                             <InputMask value={password} maskChar={null} onChange={onChangePassword} mask={passwordMask}>
@@ -268,7 +270,7 @@ export default function Registration () {
                                         {...inputProps}
                                         id="password"
                                         type="password"
-                                        placeholder="Пароль"
+                                        placeholder={t("login.password")}
                                         required={true}
                                         sizing="lg"
                                     />
@@ -279,12 +281,12 @@ export default function Registration () {
                             <div>
                                 <div className='input-container'>
                                 <div className='block'>
-                                    <Label htmlFor="transport" value='Выберите тип транспорта' />
+                                    <Label htmlFor="transport" value={t('registration.transportLabel')} />
                                 </div>
                                 <Select
                                     className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2"
                                     classNamePrefix="name"
-                                    placeholder='Выберите тип транспорта'
+                                    placeholder={t('registration.transportLabel')}
                                     options={transport}
                                     onChange={onChangeSelect}
                                     isSearchable={false}
@@ -300,7 +302,7 @@ export default function Registration () {
                         )}
                     </div>
                     <button type='button' disabled={!checkComplete} onClick={postRegister} className='flex items-center'>
-                        <p className="w-full">Зарегестрироваться</p>
+                        <p className="w-full">{t('welcome.registration')}</p>
                     </button>
                 </form>
             </div>

@@ -5,6 +5,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {Pagination, Spinner} from "flowbite-react";
 import DriverCard from "../components/molecules /DriverCard/component";
+import {useTranslation} from "react-i18next";
+import '../utils/i18next';
 
 export default function MyOrders() {
     const [userSuccess, setUserSuccess] = useState(false);
@@ -13,6 +15,8 @@ export default function MyOrders() {
     const [loading, setLoading] = useState(true);
     const [cancel, setCancel] = useState(false);
     const [userInfo, setUserInfo] = useState();
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         if(!cancelArchive) {
@@ -71,12 +75,12 @@ export default function MyOrders() {
 
     return (
         <div className='myOrders-container'>
-            <Header removeUrl='/home' text='На главную'></Header>
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}></Header>
             <div className='p-4 pb-2'>
                 <div className='flex w-full justify-between items-center'>
-                    <h2>Мои заявки</h2>
+                    <h2>{t("home.myOrder")}</h2>
                     <div className="inline-flex shrink-0 items-center justify-center rounded bg-blue-50">
-                        <p className='p-2'>Количество: {myOrders.length}</p>
+                        <p className='p-2'>{t("home.totalOrder")} {myOrders.length}</p>
                     </div>
                 </div>
                 {loading ? (
@@ -153,7 +157,7 @@ export default function MyOrders() {
                                 </div>
                             )
                         ) : (
-                            <p className='mt-4'>На данный момент у вас нету заявок</p>
+                            <p className='mt-4'>{t("home.noMyOrders")}к</p>
                         )}
                     </div>
                 )}

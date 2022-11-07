@@ -7,6 +7,8 @@ import axios from 'axios';
 import qs from 'qs';
 import Cookies from 'js-cookie';
 import {useRouter} from "next/router";
+import {useTranslation} from "react-i18next";
+import '../utils/i18next';
 
 export default function Login() {
     const phoneMask = '+7-(999)-999-99-99';
@@ -18,6 +20,8 @@ export default function Login() {
     const [errMessage, setErrMesage] = useState('');
     const [checkComplete, setCheckComplete] = useState(false);
     const router = useRouter();
+    const { t } = useTranslation();
+
 
     const onChangePhone = useCallback((event) => {
         setPhone(event.target.value);
@@ -59,17 +63,17 @@ export default function Login() {
 
     return (
         <div className=''>
-            <Header removeUrl='/' />
+            <Header removeUrl='/' mainHeader={true} />
             <div className='login-main'>
-                <h1>Вход в личный кабинет</h1>
-                <p className='mt-2'>Введите номер телефона и пароль для авторизации в <span>Jukte.kz</span></p>
+                <h1>{t("login.title")}</h1>
+                <p className='mt-2'>{t("login.desc")} <span>Jukte.kz</span></p>
                 <form className='flex flex-col pt-6 login-form'>
                     <div className='mb-auto'>
                         <div className='input-container'>
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="phone"
-                                    value="Введите номер телефона"
+                                    value={t("login.phone_number")}
                                 />
                             </div>
                             <InputMask value={phone} maskChar={null} onChange={onChangePhone} mask={phoneMask}>
@@ -90,7 +94,7 @@ export default function Login() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="password"
-                                    value="Введите 6-значный пин-код"
+                                    value={t("login.password_label")}
                                 />
                             </div>
                             <InputMask value={password} maskChar={null} onChange={onChangePassword} mask={passwordMask}>
@@ -99,7 +103,7 @@ export default function Login() {
                                         {...inputProps}
                                         id="password"
                                         type="password"
-                                        placeholder="Пароль"
+                                        placeholder={t("login.password")}
                                         required={true}
                                         sizing="lg"
                                     />
@@ -114,7 +118,7 @@ export default function Login() {
                         )}
                     </div>
                     <button disabled={!checkComplete} type='button' onClick={postLogin} className='flex login-button items-center px-4'>
-                        <p className="w-full">Войти</p>
+                        <p className="w-full">{t("login.btn")}</p>
                         <Image width={24} height={24} alt='arrow-icon' src='/assets/icon/right-arrow.svg'></Image>
                     </button>
                 </form>

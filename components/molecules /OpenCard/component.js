@@ -1,12 +1,15 @@
 import moment from "moment";
 import Link from "next/link";
 import {useState} from "react";
+import {useTranslation} from "react-i18next";
+import '../../../utils/i18next';
 
 export default function OpenCard({
                                      shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
                                      description, status, phone, role, id, onClick, detail, transfer
 }) {
     const [show, setShow] = useState(false);
+    const { t } = useTranslation();
     return (
         <div className="rounded shadow-sm bg-white w-full myCard-container p-4">
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
@@ -26,7 +29,7 @@ export default function OpenCard({
                     <div className='flex flex-col gap-2'>
                         <div className='flex items-center'>
                             <img className='mr-2' src="/assets/icon/tenge.svg" alt=""/>
-                            <h1>Цена: {price} ₸ <br/> Услуги логиста: {logPrice} ₸</h1>
+                            <h1>{t("createOrders.price")}: {price} ₸ <br/> {t("card.priceLog")}: {logPrice} ₸</h1>
                         </div>
                         <div className='flex items-center'>
                             <img className='mr-2' src="/assets/icon/weight.svg" alt=""/>
@@ -53,12 +56,12 @@ export default function OpenCard({
                             <p>{shipment}</p>
                         </div>
                         <div className='items-center'>
-                            <p className="font-bold">Детали перевозки:</p>
+                            <p className="font-bold">{t("createOrders.detail")}:</p>
                             <p>{detail}</p>
                         </div>
                     </div>
                     <div className='mt-4 w-full flex justify-center link-button rounded' onClick={onClick}>
-                        <Link href={'tel:+'+phone}>Позвонить заказчику</Link>
+                        <Link href={'tel:+'+phone}>{t("card.callOwner")}</Link>
                     </div>
                 </div>
             )}
@@ -66,9 +69,9 @@ export default function OpenCard({
                 setShow(!show)
             }} className='mt-2 w-full bg-blue-400 text-white rounded p-1'>
                 {!show ? (
-                    "Подробнее"
+                    t("card.open")
                 ): (
-                    "Закрыть"
+                    t("card.close")
                 )}
             </button>
         </div>

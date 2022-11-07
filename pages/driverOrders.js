@@ -6,12 +6,16 @@ import Cookies from "js-cookie";
 import {Pagination, Spinner} from "flowbite-react";
 import DriverCard from "../components/molecules /DriverCard/component";
 import qs from "qs";
+import {useTranslation} from "react-i18next";
+import '../utils/i18next';
 
 export default function driverOrders() {
     const [myOrders, setMyOrders] = useState(Array);
     const [cancelArchive, setCancelArchive] = useState(false);
     const [loading, setLoading] = useState(true);
     const [showAskUser, setShowAskUser] = useState(false);
+
+    const { t } = useTranslation();
 
     const toAskUser = () => {
         setShowAskUser(!showAskUser);
@@ -61,7 +65,7 @@ export default function driverOrders() {
 
     return (
         <div className='myOrders-container'>
-            <Header removeUrl='/home' text='На главную'></Header>
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}></Header>
             <div className='p-4 pb-2'>
                 <div className='flex w-full justify-between items-center'>
                     <h2>Открытые машины</h2>
@@ -110,7 +114,7 @@ export default function driverOrders() {
                                 }
                             </div>
                         ) : (
-                            <p className='mt-4'>На данный момент открытых машин нету</p>
+                            <p className='mt-4'>{t("home.noDriverOrders")}</p>
                         )}
                     </div>
                 )}

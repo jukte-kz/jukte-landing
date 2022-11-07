@@ -7,11 +7,14 @@ import qs from "qs";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
 import {Checkbox} from "@nextui-org/react";
+import {useTranslation} from "react-i18next";
+import '../utils/i18next';
 
 export default function Settings () {
     const phoneMask = '+7-(999)-999-99-99';
     const binMask = '999999999999';
     const router = useRouter();
+    const { t } = useTranslation();
 
     const [userInfo, setUserInfo] = useState();
     const [loading, setLoading] = useState(false);
@@ -176,21 +179,20 @@ export default function Settings () {
 
     return (
         <div>
-            <Header removeUrl='/home' text='На главную' />
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true} />
             <div className='settings-main py-6 px-4'>
-                <h1>Настройки</h1>
+                <h1>{t("home.settings")}</h1>
                 <hr className='mt-4' />
                 <div className='mt-6 p-4 rounded flex items-center bg-[#4F52FF]'>
                     <img src="/assets/icon/warning.svg" alt=""/>
                     <div>
                         <p className='ml-4 text-white'>
-                            Внимание! Данные реквизита компании и ИИН вводятся один раз!
-                            Просим вас вводить данные <b>корректно</b>
+                            {t("settings.warning")} <b>{t("registration.warningBold")}</b>
                         </p>
                     </div>
                 </div>
                 <div className="form-section mt-6 border-2 p-4">
-                    <h4>Личные данные</h4>
+                    <h4>{t("settings.myInfo")}</h4>
                     {userInfo && (
                         <form className='flex flex-col mt-4 login-form'>
                             {loading ? (
@@ -199,7 +201,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="name"
-                                                value="Введите ваше имя"
+                                                value={t("registration.name")}
                                             />
                                         </div>
                                         <InputMask value={name} maskChar={null} onChange={onChangeName}>
@@ -219,7 +221,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="surname"
-                                                value="Введите ваше фамилию"
+                                                value={t("registration.surname")}
                                             />
                                         </div>
                                         <InputMask value={surname} maskChar={null} onChange={onChangeSurname}>
@@ -239,7 +241,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="iin"
-                                                value="Введите ИИН (для нерезидентов Казахстана номер документа)"
+                                                value={t("settings.iinLabel")}
                                             />
                                         </div>
                                             <TextInput
@@ -257,7 +259,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="phone"
-                                                value="Введите номер телефона"
+                                                value={t("settings.phone")}
                                             />
                                         </div>
                                         <InputMask value={phone} maskChar={null} disabled={disabledPhone} onChange={onChangePhone} mask={phoneMask}>
@@ -285,7 +287,7 @@ export default function Settings () {
                     )}
                 </div>
                 <div className="form-section mt-6 border-2 p-4">
-                    <h4>Реквизиты компании</h4>
+                    <h4>{t("settings.companyTitle")}</h4>
                     {userInfo && (
                         <form className='flex flex-col mt-4 login-form'>
                             {loading ? (
@@ -294,7 +296,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="companyName"
-                                                value="Введите имя компании"
+                                                value={t("settings.companyName")}
                                             />
                                         </div>
                                         <TextInput
@@ -312,7 +314,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="companyAddress"
-                                                value="Юридически  адрес компании"
+                                                value={t("settings.companyAddress")}
                                             />
                                         </div>
                                         <TextInput
@@ -320,7 +322,7 @@ export default function Settings () {
                                             value={companyAddress}
                                             id="companyAddress"
                                             type="text"
-                                            placeholder={companyAddress ? (companyAddress) : ('Город, адрес')}
+                                            placeholder={companyAddress ? (companyAddress) : (t("settings.companyPlaceholder"))}
                                             required={true}
                                             sizing="lg"
                                         />
@@ -329,7 +331,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="bin"
-                                                value="Введите BIN компании"
+                                                value={t("settings.companyBin")}
                                             />
                                         </div>
                                             <TextInput
@@ -347,7 +349,7 @@ export default function Settings () {
                                         <div className="mb-2 block">
                                             <Label
                                                 htmlFor="iban"
-                                                value="Введите номер счета (IBAN)"
+                                                value={t("settings.companyIban")}
                                             />
                                         </div>
                                             <TextInput
@@ -375,7 +377,7 @@ export default function Settings () {
                 {userInfo && (
                     userInfo.role === 'driver' && (
                         <div className="form-section mt-6 border-2 p-4">
-                            <h4>Данные машины</h4>
+                            <h4>{t("settings.companyCarNumberTitle")}</h4>
                             <form className='flex flex-col mt-4 login-form'>
                                 {loading ? (
                                     <div className='mb-auto'>
@@ -383,7 +385,7 @@ export default function Settings () {
                                             <div className="mb-2 block">
                                                 <Label
                                                     htmlFor="carNumber"
-                                                    value="Введите гос.номер машины"
+                                                    value={t("settings.companyCarNumber")}
                                                 />
                                             </div>
                                             <TextInput
@@ -410,7 +412,7 @@ export default function Settings () {
                     )
                 )}
                 <button type='button' className='flex items-center settings-button px-4 mt-4' onClick={sendUserData}>
-                    <p className="w-full">Сохранить</p>
+                    <p className="w-full">{t("home.save")}</p>
                 </button>
             </div>
             <Modal
@@ -419,7 +421,7 @@ export default function Settings () {
             >
                 <Modal.Body>
                     <div className='w-full success-container z-10'>
-                        <p className='text-center'>Данные успешно обновлены!</p>
+                        <p className='text-center'>{t("settings.saveSuccessModal")}</p>
                         <div className="success-animation mt-6">
                             <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                                 <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -430,7 +432,7 @@ export default function Settings () {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='w-full redirect-button' onClick={toEndSettings}>
-                        Перейти на главную страницу
+                        {t("home.mainPage")}
                     </button>
                 </Modal.Footer>
             </Modal>

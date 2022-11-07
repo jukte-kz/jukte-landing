@@ -14,6 +14,8 @@ import {useRouter} from "next/router";
 import moment from "moment/moment";
 import {transportUp} from "../public/assets/data/transportUp";
 import {ru} from "date-fns/locale";
+import '../utils/i18next';
+import { useTranslation } from "react-i18next";
 
 export const transport = [
     {
@@ -105,6 +107,7 @@ export default function createOrders() {
 
     const mapRef = useRef()
     const router = useRouter();
+    const { t } = useTranslation();
 
     const onChangeDescription = useCallback((event) => {
         setDescription(event.target.value);
@@ -250,9 +253,9 @@ export default function createOrders() {
 
     return (
         <div>
-            <Header removeUrl='/home' text='На главную' />
+            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}/>
             <div className='settings-main py-6 px-4'>
-                <h1>Обновить заявку</h1>
+                <h1>{t("createOrders.updateOrder")}</h1>
                 <hr className='mt-4' />
                 <form className='flex flex-col mt-4 login-form'>
                     <div className='mb-auto'>
@@ -301,7 +304,7 @@ export default function createOrders() {
                                 <div className="mb-2 block">
                                     <Label
                                         htmlFor="product"
-                                        value="Наименование товара"
+                                        value={t("createOrders.product")}
                                     />
                                 </div>
                                 {myOrderRedact && (
@@ -321,7 +324,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="desc"
-                                    value="Детали перевозки"
+                                    value={t("createOrders.detail")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -332,7 +335,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="surname"
-                                    value="Выберите дату отправления"
+                                    value={t("createOrders.date")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -360,7 +363,7 @@ export default function createOrders() {
                         {role === 'logistician' && (
                             <div className='input-container'>
                                 <div className='mb-2 block'>
-                                    <Label htmlFor="transport" value='Выберите тип транспорта' />
+                                    <Label htmlFor="transport" value={t("createOrders.transport")} />
                                 </div>
                                 {myOrderRedact && (
                                     <Select
@@ -376,7 +379,7 @@ export default function createOrders() {
                         )}
                         <div className='input-container'>
                             <div className='mb-2 block'>
-                                <Label htmlFor="transport" value='Выберите тип погрузки' />
+                                <Label htmlFor="transport" value={t("createOrders.upTransport")} />
                             </div>
                             {myOrderRedact && (
                                 <Select
@@ -393,7 +396,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="weight"
-                                    value="Вес груза"
+                                    value={t("createOrders.weight")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -415,7 +418,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="cubProduct"
-                                    value="Кубометр груза"
+                                    value={t("createOrders.cubometr")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -438,7 +441,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="distance"
-                                    value="Расстояние"
+                                    value={t("createOrders.disctance")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -457,7 +460,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="desc"
-                                    value="Время в пути"
+                                    value={t("createOrders.time")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -477,7 +480,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="price"
-                                    value="Цена"
+                                    value={t("createOrders.price")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -495,7 +498,7 @@ export default function createOrders() {
                             <div className="mb-2 block">
                                 <Label
                                     htmlFor="price"
-                                    value="Цена за услуги логиста"
+                                    value={t("createOrders.priceLogistician")}
                                 />
                             </div>
                             {myOrderRedact && (
@@ -512,10 +515,10 @@ export default function createOrders() {
                     </div>
                 </form>
                 <button type='button' disabled={!checkCalc} className='flex items-center settings-button px-4 mt-4' onClick={calcPrice}>
-                    <p className="w-full">Посчиатать</p>
+                    <p className="w-full">{t("createOrders.calc")}</p>
                 </button>
                 <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={sendOrderData}>
-                    <p className="w-full">Обновить заявку</p>
+                    <p className="w-full">{t("createOrders.updateOrder")}</p>
                 </button>
             </div>
             <Modal
@@ -524,7 +527,7 @@ export default function createOrders() {
             >
                 <Modal.Body>
                     <div className='w-full success-container'>
-                        <p className='text-center'>Заявка успешно обновлена!</p>
+                        <p className='text-center'>{t("createOrders.updateSuccess")}</p>
                         <div className="success-animation mt-6">
                             <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
                                 <circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -535,7 +538,7 @@ export default function createOrders() {
                 </Modal.Body>
                 <Modal.Footer>
                     <button className='w-full redirect-button' onClick={endCreateOrder}>
-                        Перейти в меню
+                        {t("home.mainPage")}
                     </button>
                 </Modal.Footer>
             </Modal>
