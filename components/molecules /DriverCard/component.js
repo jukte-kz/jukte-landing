@@ -40,7 +40,7 @@ export default function DriverCard({
             </div>
             {show && (
                 <div>
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 mb-4'>
                         <div className='flex items-center'>
                             <img className='mr-2' src="/assets/icon/tenge.svg" alt=""/>
                             <h1>{t("createOrders.price")}: {price} ₸ <br/> {t("card.priceLog")}: {logPrice} ₸</h1>
@@ -74,6 +74,17 @@ export default function DriverCard({
                             <p>{product}</p>
                         </div>
                     </div>
+                    {role === 'driver' && (
+                        status !== 'inProgress' ? (
+                            <button className="w-full">
+                                <div className='mb-2 w-full flex justify-center delete-button rounded'>
+                                    {t("card.delete")}
+                                </div>
+                            </button>
+                        ):(
+                            <></>
+                        )
+                    )}
                     {role === 'driver' ? (
                         status !== 'inProgress' ? (
                             <Link href={{
@@ -83,7 +94,7 @@ export default function DriverCard({
                                     slug: id
                                 }
                             }}>
-                                <div className='mt-4 w-full flex justify-center link-button rounded'>
+                                <div className='mb-2 w-full flex justify-center link-button rounded'>
                                     {t("card.refactor")}
                                 </div>
                             </Link>
@@ -93,7 +104,7 @@ export default function DriverCard({
                     ): (
                         <div onClick={onClick}>
                             <Link href={'tel:+'+phone}>
-                                <div className='mt-4 w-full flex justify-center link-button rounded'>
+                                <div className='mb-2 w-full flex justify-center link-button rounded'>
                                     {t("card.callDriver")}
                                 </div>
                             </Link>
@@ -103,7 +114,7 @@ export default function DriverCard({
             )}
             <button onClick={() => {
                 setShow(!show)
-            }} className='mt-2 w-full bg-blue-400 text-white rounded p-1'>
+            }} className='w-full bg-blue-400 text-white rounded p-1'>
                 {!show ? (
                     t("card.open")
                 ): (
