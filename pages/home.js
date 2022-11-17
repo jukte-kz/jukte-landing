@@ -15,6 +15,7 @@ import '../utils/i18next';
 
 export default function Home () {
     const [userSuccess, setUserSuccess] = useState(false);
+    const [userPay, setUserPay] = useState(true);
     const [cancel, setCancel] = useState(false);
     const [cancelArchive, setCancelArchive] = useState(false);
     const [cancelOpenOrders, setCancelOpenOrders] = useState(false);
@@ -37,6 +38,22 @@ export default function Home () {
     useEffect(()=>{
     })
 
+    const deleteOrder = (orderId) => {
+        axios({
+            method: 'put',
+            url: `https://api.jukte.kz/orders/delete/${orderId}`,
+            data: qs.stringify({}),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+                token: Cookies.get('accessToken')
+            }
+        }).then((res) => {
+            if (res.status === 200) {
+                window.location.reload(false);
+            }
+        })
+    }
+
     const matchOrder = (orderID) => {
         axios({
             method: 'put',
@@ -51,6 +68,10 @@ export default function Home () {
                 window.location.reload(false);
             }
         })
+    }
+
+    const finishPay = () => {
+        setUserPay(!userPay);
     }
 
     const goToSuccess = () => {
@@ -212,6 +233,9 @@ export default function Home () {
                                                     role={userInfo.role}
                                                     phone={data.ownerPhone}
                                                     id={data._id}
+                                                    clickDelete={() => {
+                                                        deleteOrder(data._id)
+                                                    }}
                                                 />
                                             ) : (
                                                 <DriverCard
@@ -395,6 +419,21 @@ export default function Home () {
                     <button className='w-full redirect-button' onClick={goToSuccess}>
                         {t("home.noVerButton")}
                     </button>
+                </Modal.Footer>
+            </Modal>
+            <Modal
+                show={!userPay}
+            >
+                <Modal.Body>
+                    <div className="space-y-6">
+                        <Header removeUrl='/login' />
+                        <p className="text-base leading-relaxed">
+                            {t("home.noPay")}
+                        </p>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <a onClick={finishPay} className='w-full redirect-button flex items-center justify-center' href="https://api.paybox.money/payment.php?pg_merchant_id=546728&pg_amount=5000&pg_currency=KZT&pg_description=%D0%A2%D0%B5%D1%81%D1%82&pg_salt=784hILVVmSh76ikD&pg_language=ru&pg_sig=a1232501fd238b5befe5378e2cf59d86">Оплатить «Тест» через PayBox.money</a>
                 </Modal.Footer>
             </Modal>
         </div>

@@ -31,13 +31,18 @@ export default function Header({removeUrl, text, mainHeader, withArrow=true}) {
                 <div className='flex items-center'>
                     <button onClick={() => {
                         changeLang('kz')
-                    }} className='flex items-center mx-4'>
+                    }} className='flex items-center mx-2'>
                         <Image width={32} height={32} src='/assets/lang/kazakhstan.png' />
                     </button>
                     <button onClick={() => {
                         changeLang('ru')
-                    }} className='flex items-center'>
+                    }} className='flex items-center mx-2'>
                         <Image width={32} height={32} src='/assets/lang/russia.png' />
+                    </button>
+                    <button onClick={() => {
+                        changeLang('en')
+                    }} className='flex items-center ml-2'>
+                        <Image width={32} height={32} src='/assets/lang/england.png' />
                     </button>
                 </div>
             )}

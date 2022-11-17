@@ -11,6 +11,7 @@ import Select from "react-select";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import '../utils/i18next';
+import Link from "next/link";
 
 export default function Registration () {
     const phoneMask = '+7-(999)-999-99-99';
@@ -32,6 +33,7 @@ export default function Registration () {
     const [showModal, setShowModal] = useState(false);
     const [successText, setSuccessText] = useState(false);
     const [showTeleErr, setShowTeleErr] = useState(false);
+    const [showLaw, setShowLaw] = useState(false);
 
     const router = useRouter();
     const { t } = useTranslation();
@@ -158,7 +160,10 @@ export default function Registration () {
                             <input id="default-checkbox" type="checkbox" value=""
                                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                             <label htmlFor="bordered-radio-0"
-                                   className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">{t("registration.confirm")}</label>
+                                   className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">
+                                {t("registration.confirm")}
+                                <p onClick={()=>{setShowLaw(true)}} className="mt-2 text-link">Политика конфиденциальности</p>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -306,6 +311,28 @@ export default function Registration () {
                     </button>
                 </form>
             </div>
+            <Modal
+                show={showLaw}
+                position='center'>
+                <Modal.Header onClick={() => {
+                    setShowLaw(false)
+                }}>
+                    Политика конфиденциальности
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
+                        <p className="px-2">
+                            Если вы видите неопределенный термин в настоящей Политике Конфиденциальности (например, «Груз» или «Платформа Jukte»), он имеет то же определение, что и в наших Условиях Пользования («Условия»).
+                            <br/>
+                            Данная Политика Конфиденциальности описывает, как мы собираем, используем, обрабатываем и раскрываем вашу личную информацию в связи с вашим доступом и использованием Платформы Jukte. Эта Политика Конфиденциальности описывает нашу политику конфиденциальности для всех веб-сайтов, платформ и служб, которые ссылаются на нее.
+                        </p>
+                    </div>
+                    <div className="mt-2">
+                        <h4 className="font-bold">Какую Информацию Мы Собираем</h4>
+                        <p>Мы просим и собираем следующую личную информацию о вас, когда вы используете Платформу Jukte. Эта информация необходима для надлежащего выполнения договора между вами и нами и для того, чтобы мы могли выполнять свои юридические обязательства. Без нее мы не сможем предоставить вам все запрошенные услуги.</p>
+                    </div>
+                </Modal.Body>
+            </Modal>
             <Modal
                 show={showTeleErr}
                 position='center'>

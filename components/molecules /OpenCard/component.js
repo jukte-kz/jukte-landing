@@ -15,6 +15,9 @@ export default function OpenCard({
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
                 <div>
                     <div className='flex items-center'>
+                        <h2 className='mb-2'>ИП "Jukte"</h2>
+                    </div>
+                    <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/product.svg" alt=""/>
                         <h2 className='mb-2'>{product}</h2>
                     </div>

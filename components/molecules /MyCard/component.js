@@ -6,7 +6,7 @@ import '../../../utils/i18next';
 
 export default function MyCard({
                                    shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                   description, status, phone, role, id, detail, transfer
+                                   description, status, clickDelete, id, detail, transfer,
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -34,6 +34,9 @@ export default function MyCard({
             </div>
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
                 <div>
+                    <div className='flex items-center'>
+                        <h2 className='mb-2'>ИП "Jukte"</h2>
+                    </div>
                     <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/product.svg" alt=""/>
                         <h2 className='mb-2'>{product}</h2>
@@ -81,7 +84,7 @@ export default function MyCard({
                         </div>
                     </div>
                     {status !== 'inProgress' ? (
-                        <button className="w-full">
+                        <button className="w-full" onClick={clickDelete}>
                             <div className='mb-2 w-full flex justify-center delete-button rounded'>
                                 {t("card.delete")}
                             </div>

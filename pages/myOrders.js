@@ -7,6 +7,7 @@ import {Pagination, Spinner} from "flowbite-react";
 import DriverCard from "../components/molecules /DriverCard/component";
 import {useTranslation} from "react-i18next";
 import '../utils/i18next';
+import qs from "qs";
 
 export default function MyOrders() {
     const [userSuccess, setUserSuccess] = useState(false);
@@ -17,6 +18,22 @@ export default function MyOrders() {
     const [userInfo, setUserInfo] = useState();
 
     const { t } = useTranslation();
+
+    const deleteOrder = (orderId) => {
+        axios({
+            method: 'put',
+            url: `https://api.jukte.kz/orders/delete/${orderId}`,
+            data: qs.stringify({}),
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+                token: Cookies.get('accessToken')
+            }
+        }).then((res) => {
+            if (res.status === 200) {
+                window.location.reload(false);
+            }
+        })
+    }
 
     useEffect(() => {
         if(!cancelArchive) {
@@ -118,6 +135,7 @@ export default function MyOrders() {
                                                         phone={data.ownerPhone}
                                                         id={data._id}
                                                         transfer={data.transfer}
+                                                        clickDelete={deleteOrder(data._id)}
                                                     />
                                                 </>
                                             )

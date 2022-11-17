@@ -34,6 +34,9 @@ export default function DriverCard({
                     )}
                 </div>
                 <div className='flex items-center'>
+                    <p className='font-bold'>ИП "Jukte"</p>
+                </div>
+                <div className='flex items-center'>
                     <img className='mr-2' src="/assets/icon/distance.svg" alt=""/>
                     <p className='font-bold'>{from} - {transfer === undefined ? (''):(transfer + ' - ')} {to}</p>
                 </div>

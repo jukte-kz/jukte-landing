@@ -9,7 +9,7 @@ i18n
     .use(initReactI18next)
     .init({
         fallbackLng: 'kz',
-        whitelist: ['kz','ru'],
+        whitelist: ['kz','ru', 'en'],
         debug: false,
         detection: {
         },
