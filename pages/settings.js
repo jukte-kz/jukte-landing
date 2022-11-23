@@ -23,12 +23,10 @@ export default function Settings () {
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [iin, setIin] = useState('');
 
     const [companyName, setCompanyName] = useState('');
     const [companyAddress, setCompanyAddress] = useState('');
     const [bin, setBin] = useState('');
-    const [iban, setIban] = useState('');
 
     const [directorName, setDirectorName] = useState('');
     const [directorSurname, setDirectorSurname] = useState('');
@@ -55,9 +53,6 @@ export default function Settings () {
     const onChangeSurname = useCallback((event) => {
         setSurname(event.target.value);
     }, []);
-    const onChangeIin = useCallback((event) => {
-        setIin(event.target.value);
-    }, []);
 
     const onChangeCompanyAddress = useCallback((event) => {
         setCompanyAddress(event.target.value);
@@ -67,9 +62,6 @@ export default function Settings () {
     }, []);
     const onChangeBin = useCallback((event) => {
         setBin(event.target.value);
-    }, []);
-    const onChangeIban = useCallback((event) => {
-        setIban(event.target.value);
     }, []);
 
     const onChangeDirectorName = useCallback((event) => {
@@ -93,18 +85,15 @@ export default function Settings () {
                     token: Cookies.get('accessToken')
                 }
             }).then((res) => {
-                console.log(res);
                 setUserInfo(res.data);
                 setCancelReq(true);
                 setLoading(true);
                 setName(res.data.name);
                 setSurname(res.data.surname);
-                setIin(res.data.iin);
                 setPhone(res.data.phone);
                 setCompanyName(res.data.company.name);
                 setCompanyAddress(res.data.company.contacts.address);
                 setBin(res.data.company.bin);
-                setIban(res.data.company.account);
                 setDirectorName(res.data.company.director.name);
                 setDirectorSurname(res.data.company.director.surname);
                 setCarNumber(Cookies.get('carNumber'));
@@ -115,17 +104,11 @@ export default function Settings () {
             })
         }
         if (userInfo) {
-            if (userInfo.iin) {
-                setDisabledIin(true);
-            }
             if (userInfo.company.name) {
                 setDisabledCompanyName(true);
             }
             if (userInfo.company.bin) {
                 setDisabledCompanyBin(true);
-            }
-            if (userInfo.company.account) {
-                setDisabledCompanyIban(true);
             }
             if (userInfo.company.director.name) {
                 setDisabledCarNumber(true);
@@ -145,17 +128,16 @@ export default function Settings () {
                 personal: {
                     name: name,
                     surname: surname,
-                    iin: iin,
                     phone: phone.replace(/(-)|\+|\(|\)/g, ''),
                 },
                 company: {
                     name: companyName,
-                    account: iban.toUpperCase(),
+                    account: 'KZ0000000000',
                     bin: bin,
                     director: {
                         name: directorName,
                         surname: directorSurname,
-                        iin: '981103350587',
+                        iin: '000000000000',
                     },
                     contacts: {
                         address: companyAddress,
@@ -235,24 +217,6 @@ export default function Settings () {
                                                 />
                                             )}
                                         </InputMask>
-                                    </div>
-                                    <div className='input-container'>
-                                        <div className="mb-2 block">
-                                            <Label
-                                                htmlFor="iin"
-                                                value={t("settings.iinLabel")}
-                                            />
-                                        </div>
-                                            <TextInput
-                                                disabled={disabledIin}
-                                                onChange={onChangeIin}
-                                                value={iin}
-                                                id="iin"
-                                                type="tel"
-                                                placeholder={iin}
-                                                required={true}
-                                                sizing="lg"
-                                            />
                                     </div>
                                     <div className='input-container'>
                                         <div className="mb-2 block">
@@ -340,24 +304,6 @@ export default function Settings () {
                                                 id="bin"
                                                 type="tel"
                                                 placeholder={bin}
-                                                required={true}
-                                                sizing="lg"
-                                            />
-                                    </div>
-                                    <div className='input-container'>
-                                        <div className="mb-2 block">
-                                            <Label
-                                                htmlFor="iban"
-                                                value={t("settings.companyIban")}
-                                            />
-                                        </div>
-                                            <TextInput
-                                                disabled={disabledCompanyIban}
-                                                onChange={onChangeIban}
-                                                value={iban}
-                                                id="iban"
-                                                type="text"
-                                                placeholder={iban}
                                                 required={true}
                                                 sizing="lg"
                                             />

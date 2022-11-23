@@ -125,7 +125,7 @@ export default function Registration () {
     useEffect(() => {
         setCheckComplete(
             phone.length === 18 && name.length > 0 &&
-            surname.length > 0 && iin.length > 0 && password.length === 6 && role.length > 0
+            surname.length > 0  && password.length === 6 && role.length > 0
         )
         setOtpCheckComplete(
             otp.length === 6
