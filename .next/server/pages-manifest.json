@@ -1,6 +1,19 @@
 {
-  "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/home": "pages/home.js"
+  "/_app": "pages/_app.js",
+  "/[slug]": "pages/[slug].js",
+  "/api/hello": "pages/api/hello.js",
+  "/createDriverOrders": "pages/createDriverOrders.js",
+  "/faq": "pages/faq.js",
+  "/createOrders": "pages/createOrders.js",
+  "/driverOrders": "pages/driverOrders.js",
+  "/": "pages/index.js",
+  "/home": "pages/home.js",
+  "/login": "pages/login.js",
+  "/openOrders": "pages/openOrders.js",
+  "/myOrders": "pages/myOrders.js",
+  "/registration": "pages/registration.js",
+  "/test": "pages/test.js",
+  "/settings": "pages/settings.js",
+  "/_document": "pages/_document.js"
 }

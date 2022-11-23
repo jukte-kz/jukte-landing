@@ -6,7 +6,6 @@ import axios from "axios";
 import qs from "qs";
 import Cookies from "js-cookie";
 import {useRouter} from "next/router";
-import {Checkbox} from "@nextui-org/react";
 import {useTranslation} from "react-i18next";
 import '../utils/i18next';
 
