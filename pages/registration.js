@@ -19,7 +19,6 @@ export default function Registration () {
     const passwordMask = '999999';
     const [phone, setPhone] = useState('');
     const [otp, setOtp] = useState(String);
-    const [iin, setIin] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
     const [password, setPassword] = useState('');
@@ -44,10 +43,6 @@ export default function Registration () {
 
     const onChangeOtp = useCallback((event) => {
         setOtp(event.target.value);
-    }, [])
-
-    const onChangeIin = useCallback((event) => {
-        setIin(event.target.value);
     }, [])
 
     const onChangeName = useCallback((event) => {
@@ -89,7 +84,6 @@ export default function Registration () {
                 role: role,
                 name: name,
                 surname: surname,
-                iin: iin,
             }),
         }).then((res) => {
             if (res.data) {
@@ -224,23 +218,6 @@ export default function Registration () {
                                 value={surname}
                                 onChange={onChangeSurname}
                             />
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="iin"
-                                    value={t("registration.iinLabel")}
-                                />
-                            </div>
-                                <TextInput
-                                    onChange={onChangeIin}
-                                    value={iin}
-                                    id="iin"
-                                    type='tel'
-                                    placeholder=""
-                                    required={true}
-                                    sizing="lg"
-                                />
                         </div>
                         <div className='input-container'>
                             <div className="mb-2 block">
