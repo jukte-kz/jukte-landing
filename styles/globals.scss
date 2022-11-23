@@ -44,6 +44,18 @@ a {
   }
 }
 
+.accordion {
+  border: none!important;
+  padding: 0 1rem;
+}
+
+.accordion__button {
+  border-bottom-right-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  margin-top: 0.125rem;
+  background-color: rgba(37, 57, 215, 0.1)!important;
+}
+
 #modalTransfer {
   .bg-white {
     width: 100%;
