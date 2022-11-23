@@ -29,6 +29,7 @@
     "react-input-mask": "^2.0.4",
     "react-maskedinput": "^4.0.1",
     "react-select": "^5.4.0",
+    "react-yandex-maps": "^4.6.0",
     "sass": "^1.54.5"
   },
   "devDependencies": {
