@@ -10,7 +10,6 @@
     "export": "npm run build && next export"
   },
   "dependencies": {
-    "@nextui-org/react": "^1.0.0-beta.10",
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
     "flowbite": "^1.5.2",
