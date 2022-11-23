@@ -12,7 +12,7 @@ export default function Welcome({toLogin}) {
             <div className='flex min-h-full flex-col h-full justify-between items-center py-4 px-4 main-welcome'>
                 <Image alt='logo' src='/assets/image/logo.svg' width={160} height={40} />
                 <div className='flex flex-col items-center'>
-                    <Image alt='walp-image' width={328} height={328}  src='/assets/image/walp.svg'></Image>
+                    <Image alt='walp-image' width={328} height={328}  src='/assets/image/ab2.png'></Image>
                     <h2 className='text-center'>{t("welcome.title")}</h2>
                     <p className='text-center'>{t("welcome.desc")}</p>
                 </div>
