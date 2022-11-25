@@ -414,18 +414,24 @@ export default function Home () {
                 </Modal.Footer>
             </Modal>
             <Modal
-                show={!userPay}
+                show={userPay}
             >
                 <Modal.Body>
                     <div className="space-y-6">
                         <Header removeUrl='/login' />
                         <p className="text-base leading-relaxed">
                             {t("home.noPay")}
+                            <p className="underline" style={{color: '#4F52FF'}}>Правила офферты</p>
                         </p>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <a onClick={finishPay} className='w-full redirect-button flex items-center justify-center' href="https://api.paybox.money/payment.php?pg_merchant_id=546728&pg_amount=5000&pg_currency=KZT&pg_description=%D0%A2%D0%B5%D1%81%D1%82&pg_salt=784hILVVmSh76ikD&pg_language=ru&pg_sig=a1232501fd238b5befe5378e2cf59d86">Оплатить «Тест» через PayBox.money</a>
+                    <a
+                      onClick={finishPay}
+                      className='w-full redirect-button flex items-center justify-center'
+                      href="https://api.paybox.money/payment.php?pg_merchant_id=546728&pg_amount=5000&pg_currency=KZT&pg_description=%D0%A2%D0%B5%D1%81%D1%82&pg_salt=784hILVVmSh76ikD&pg_language=ru&pg_sig=a1232501fd238b5befe5378e2cf59d86">
+                        Оплатить
+                    </a>
                 </Modal.Footer>
             </Modal>
         </div>
