@@ -71,7 +71,7 @@ export default function Home () {
     }
 
     const finishPay = () => {
-        setUserPay(!userPay);
+        console.log('finish');
     }
 
     const goToSuccess = () => {
@@ -421,7 +421,7 @@ export default function Home () {
                         <Header removeUrl='/login' />
                         <p className="text-base leading-relaxed">
                             {t("home.noPay")}
-                            <p className="underline" style={{color: '#4F52FF'}}>Правила офферты</p>
+                            <p className="underline" style={{color: '#4F52FF'}}>Правила оферты</p>
                         </p>
                     </div>
                 </Modal.Body>
