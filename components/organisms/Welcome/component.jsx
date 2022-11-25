@@ -3,9 +3,24 @@ import Link from 'next/link';
 import Header from "../../atoms/Header/component";
 import { useTranslation } from "react-i18next";
 import '../../../utils/i18next';
+import { useEffect } from "react";
+import {useRouter} from "next/router";
 
 export default function Welcome({toLogin}) {
     const { t } = useTranslation();
+    const router = useRouter();
+    useEffect(() => {
+        import('react-facebook-pixel')
+          .then((x) => x.default)
+          .then((ReactPixel) => {
+              ReactPixel.init('697127578593105') // facebookPixelId
+              ReactPixel.pageView()
+
+              router.events.on('routeChangeComplete', () => {
+                  ReactPixel.pageView()
+              })
+          })
+    }, [router.events])
     return (
         <>
             <Header mainHeader={true} withArrow={false}></Header>
