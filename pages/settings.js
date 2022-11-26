@@ -11,7 +11,6 @@ import '../utils/i18next';
 
 export default function Settings () {
     const phoneMask = '+7-(999)-999-99-99';
-    const binMask = '999999999999';
     const router = useRouter();
     const { t } = useTranslation();
 
@@ -33,10 +32,8 @@ export default function Settings () {
 
     const [carNumber, setCarNumber] = useState('');
 
-    const [disabledIin, setDisabledIin] = useState(false);
     const [disabledCompanyName, setDisabledCompanyName] = useState(false);
     const [disabledCompanyBin, setDisabledCompanyBin] = useState(false);
-    const [disabledCompanyIban, setDisabledCompanyIban] = useState(false);
     const [disabledCarNumber, setDisabledCarNumber] = useState(false);
     const [disabledPhone, setDisabledPhone] = useState(false);
 
@@ -66,13 +63,6 @@ export default function Settings () {
 
     const onChangeDirectorName = useCallback((event) => {
         setDirectorName(event.target.value);
-    }, []);
-    const onChangeDirectorSurname = useCallback((event) => {
-        setDirectorSurname(event.target.value);
-    }, []);
-
-    const onChangeCarNumber = useCallback((event) => {
-        setCarNumber(event.target.value);
     }, []);
 
     useEffect(() => {

@@ -187,6 +187,7 @@ export default function Home () {
                     <LinkBlock removeUrl='/settings' title={t("home.settings")} image='/assets/icon/settings.svg' />
                     <LinkBlock removeUrl='/faq' title={t("home.faq")} image='/assets/icon/faq.svg' />
                     <LinkBlock removeUrl='https://telegram.me/jukte/' title={t("home.support")} image='/assets/icon/tech.svg' />
+                    <div className="d-flex align"></div>
                     <div className='my-orders-container py-8'>
                         <div className='flex w-full justify-between items-center'>
                             <h2>{t("home.myOrder")}</h2>
@@ -414,7 +415,7 @@ export default function Home () {
                 </Modal.Footer>
             </Modal>
             <Modal
-                show={userPay}
+                show={!userPay}
             >
                 <Modal.Body>
                     <div className="space-y-6">
