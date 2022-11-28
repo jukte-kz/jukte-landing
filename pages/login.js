@@ -19,8 +19,21 @@ export default function Login() {
     const [showError, setShowError] = useState(false);
     const [errMessage, setErrMesage] = useState('');
     const [checkComplete, setCheckComplete] = useState(false);
-    const router = useRouter();
     const { t } = useTranslation();
+    const router = useRouter();
+
+    useEffect(() => {
+        import('react-facebook-pixel')
+          .then((x) => x.default)
+          .then((ReactPixel) => {
+              ReactPixel.init('697127578593105') // facebookPixelId
+              ReactPixel.pageView()
+
+              router.events.on('routeChangeComplete', () => {
+                  ReactPixel.pageView()
+              })
+          })
+    }, [router.events]);
 
 
     const onChangePhone = useCallback((event) => {
