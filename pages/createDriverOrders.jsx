@@ -413,7 +413,9 @@ export default function createDriverOrders() {
                 <button type='button' disabled={!checkCalc} className='flex items-center settings-button px-4 mt-4' onClick={calcPrice}>
                     <p className="w-full">{t("createOrders.calc")}</p>
                 </button>
-                <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={sendOrderData}>
+                <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={() => {
+                    sendOrderData();
+                }}>
                     <p className="w-full">{t("createOrders.confirmOrder")}</p>
                 </button>
             </div>

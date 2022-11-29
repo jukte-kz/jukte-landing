@@ -316,7 +316,7 @@ export default function createOrders() {
                                 <div className="mb-2 block">
                                     <Label
                                         htmlFor="distance"
-                                        value={t("createOrders.disctance")}
+                                        value={t("createOrders.distance")}
                                     />
                                 </div>
                                 <TextInput
