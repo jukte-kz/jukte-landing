@@ -1,19 +1,29 @@
 import moment from "moment";
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import '../../../utils/i18next';
+import 'moment/locale/ru';
+
 
 export default function DriverCard({
                                        shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                       description, status, phone, role, id, onClick, transfer
+                                       description, status, phone, role, id, onClick, transfer, time
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
+
+    const [timeNow, setTimeNow] = useState('');
+    moment.locale('ru')
+
+    useEffect(() => {
+      setTimeNow(moment(time).fromNow());
+    });
+
     return (
         <div className="rounded shadow-sm bg-white w-full myCard-container p-4">
             <div className='pb-2 mb-4 border-b-2 items-start justify-between'>
-                <div className='mb-2'>
+                <div className='mb-2 flex justify-between'>
                     {status === 'open' && (
                         <span
                             className="bg-green-100 text-green-800 text-xs
@@ -32,6 +42,7 @@ export default function DriverCard({
                             {t("card.cardInProgress")}
                         </span>
                     )}
+                    <p>{timeNow}</p>
                 </div>
                 <div className='flex items-center'>
                     <p className='font-bold'>ИП "Jukte"</p>

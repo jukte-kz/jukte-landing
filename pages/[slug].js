@@ -216,6 +216,7 @@ export default function createOrders() {
                 cubProduct: cubProduct,
                 logPrice: parseInt(logPrice.replace(/\s/g, '')),
                 distance: parseInt(distance.replace(/\s/g, '')),
+                time: new Date(),
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',

@@ -17,7 +17,7 @@
   "registration": {
     "title": "User registration",
     "desc": "Enter the data for registration in",
-    "warning": "Attention! IIN is entered once! Please enter your data",
+    "warning": "Attention! Please enter your data",
     "warningBold": "correctly",
     "confirm": "I give my consent to the processing of personal data",
     "role": "Choose your activity",
@@ -69,7 +69,7 @@
     "question4": "How does the calculator work?"
   },
   "settings": {
-    "warning": "Attention! The details of the company details and IIN are entered once! Please enter data",
+    "warning": "Attention! The details of the company details are entered once! Please enter data",
     "myInfo": "Personal data",
     "iinLabel": "IIN (for non-residents of Kazakhstan document number)",
     "phone": "Your phone number",

@@ -1,12 +1,12 @@
 import moment from "moment";
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import '../../../utils/i18next';
 
 export default function OpenCard({
                                      shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                     description, status, phone, role, id, onClick, detail, transfer
+                                     description, status, phone, role, id, onClick, detail, transfer, time
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();

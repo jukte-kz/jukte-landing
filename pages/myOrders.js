@@ -135,6 +135,7 @@ export default function MyOrders() {
                                                         phone={data.ownerPhone}
                                                         id={data._id}
                                                         transfer={data.transfer}
+                                                        time={data.time}
                                                         clickDelete={deleteOrder(data._id)}
                                                     />
                                                 </>
@@ -167,7 +168,9 @@ export default function MyOrders() {
                                                     status={data.status}
                                                     role={userInfo.role}
                                                     phone={data.ownerPhone}
+                                                    time={data.time}
                                                     id={data._id}
+                                                    clickDelete={deleteOrder(data._id)}
                                                 />
                                             )
                                         })

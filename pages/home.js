@@ -226,6 +226,7 @@ export default function Home () {
                                                     role={userInfo.role}
                                                     phone={data.ownerPhone}
                                                     id={data._id}
+                                                    time={data.time}
                                                     clickDelete={() => {
                                                         deleteOrder(data._id)
                                                     }}
@@ -250,6 +251,7 @@ export default function Home () {
                                                     phone={data.ownerPhone}
                                                     id={data._id}
                                                     product={data.product}
+                                                    time={data.time}
                                                 />
                                             )
                                         )

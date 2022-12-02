@@ -123,6 +123,7 @@ export default function createDriverOrders() {
                 logPrice: parseInt(logPrice.replace(/\s/g, '')),
                 distance: parseInt(distance.replace(/\s/g, '')),
                 transfer: transfer,
+                time: new Date(),
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
