@@ -2,9 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/myOrders": "pages/myOrders.js",
-  "/home": "pages/home.js",
-  "/login": "pages/login.js",
-  "/": "pages/index.js",
+  "/lawPage": "pages/lawPage.js",
   "/registration": "pages/registration.js"
 }
