@@ -49,9 +49,4 @@ export const transport = [
         label: 'Газель',
         price: 180
     },
-    {
-        value: 11,
-        label: 'Мега 105',
-        price: 400
-    }
 ];

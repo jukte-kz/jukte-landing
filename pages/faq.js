@@ -27,11 +27,8 @@ export default function Faq() {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <p>
-                  Exercitation in fugiat est ut ad ea cupidatat ut in
-                  cupidatat occaecat ut occaecat consequat est minim minim
-                  esse tempor laborum consequat esse adipisicing eu
-                  reprehenderit enim.
+                <p className="whitespace-pre-line">
+                  {t("faq.answer1")}
                 </p>
               </AccordionItemPanel>
             </AccordionItem>
@@ -42,10 +39,8 @@ export default function Faq() {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <p>
-                  In ad velit in ex nostrud dolore cupidatat consectetur
-                  ea in ut nostrud velit in irure cillum tempor laboris
-                  sed adipisicing eu esse duis nulla non.
+                <p className="whitespace-pre-line">
+                  {t("faq.answer2")}
                 </p>
               </AccordionItemPanel>
             </AccordionItem>
@@ -56,10 +51,8 @@ export default function Faq() {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <p>
-                  In ad velit in ex nostrud dolore cupidatat consectetur
-                  ea in ut nostrud velit in irure cillum tempor laboris
-                  sed adipisicing eu esse duis nulla non.
+                <p className="whitespace-pre-line">
+                  {t("faq.answer3")}
                 </p>
               </AccordionItemPanel>
             </AccordionItem>
@@ -70,10 +63,8 @@ export default function Faq() {
                 </AccordionItemButton>
               </AccordionItemHeading>
               <AccordionItemPanel>
-                <p>
-                  In ad velit in ex nostrud dolore cupidatat consectetur
-                  ea in ut nostrud velit in irure cillum tempor laboris
-                  sed adipisicing eu esse duis nulla non.
+                <p className="whitespace-pre-line">
+                  {t("faq.answer4")}
                 </p>
               </AccordionItemPanel>
             </AccordionItem>
