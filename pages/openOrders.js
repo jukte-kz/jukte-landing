@@ -111,6 +111,7 @@ export default function MyOrders() {
                                                 status={data.status}
                                                 phone={data.ownerPhone}
                                                 id={data._id}
+                                                companyName={data.ownerCompany}
                                             />
                                         )
                                     })

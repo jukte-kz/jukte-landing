@@ -8,7 +8,7 @@ import 'moment/locale/ru';
 
 export default function DriverCard({
                                        shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                       description, status, phone, role, id, onClick, transfer, time
+                                       description, status, phone, role, id, onClick, transfer, time, companyName
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -45,7 +45,7 @@ export default function DriverCard({
                     <p>{timeNow}</p>
                 </div>
                 <div className='flex items-center'>
-                    <p className='font-bold'>ИП "Jukte"</p>
+                  <h2 className='mb-2'>{companyName}</h2>
                 </div>
                 <div className='flex items-center'>
                     <img className='mr-2' src="/assets/icon/distance.svg" alt=""/>

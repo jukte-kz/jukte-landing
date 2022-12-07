@@ -124,6 +124,7 @@ export default function createDriverOrders() {
                 distance: parseInt(distance.replace(/\s/g, '')),
                 transfer: transfer,
                 time: new Date(),
+                ownerCompany: Cookies.get('companyName')
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',

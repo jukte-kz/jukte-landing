@@ -136,7 +136,10 @@ export default function MyOrders() {
                                                         id={data._id}
                                                         transfer={data.transfer}
                                                         time={data.time}
-                                                        clickDelete={deleteOrder(data._id)}
+                                                        clickDelete={() => {
+                                                            deleteOrder(data._id)
+                                                        }}
+                                                        companyName={data.ownerCompany}
                                                     />
                                                 </>
                                             )
@@ -170,7 +173,10 @@ export default function MyOrders() {
                                                     phone={data.ownerPhone}
                                                     time={data.time}
                                                     id={data._id}
-                                                    clickDelete={deleteOrder(data._id)}
+                                                    clickDelete={() => {
+                                                        deleteOrder(data._id)
+                                                    }}
+                                                    companyName={data.ownerCompany}
                                                 />
                                             )
                                         })

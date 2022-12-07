@@ -108,6 +108,7 @@ export default function driverOrders() {
                                                 role={Cookies.get('role')}
                                                 phone={data.ownerPhone}
                                                 product={data.product}
+                                                companyName={data.ownerCompany}
                                             />
                                         )
                                     })

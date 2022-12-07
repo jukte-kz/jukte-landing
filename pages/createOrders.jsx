@@ -6,7 +6,6 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import qs from "qs";
 import DatePicker from 'react-datepicker';
-import MaskedInput from 'react-maskedinput';
 import Select from 'react-select';
 import React from "react";
 import Script from "next/script";
@@ -110,6 +109,7 @@ export default function createOrders() {
                 distance: parseInt(distance.replace(/\s/g, '')),
                 detail: detail,
                 time: new Date(),
+                ownerCompany: Cookies.get('companyName')
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',

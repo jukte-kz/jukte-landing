@@ -6,7 +6,7 @@ import '../../../utils/i18next';
 
 export default function OpenCard({
                                      shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                     description, status, phone, role, id, onClick, detail, transfer, time
+                                     description, status, phone, role, id, onClick, detail, transfer, time, companyName
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -15,7 +15,7 @@ export default function OpenCard({
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
                 <div>
                     <div className='flex items-center'>
-                        <h2 className='mb-2'>ИП "Jukte"</h2>
+                        <h2 className='mb-2'>{companyName}</h2>
                     </div>
                     <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/product.svg" alt=""/>

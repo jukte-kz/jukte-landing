@@ -7,7 +7,7 @@ import 'moment/locale/ru';
 
 export default function MyCard({
                                    shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                   description, status, clickDelete, id, detail, transfer, time
+                                   description, status, clickDelete, id, detail, transfer, time, companyName
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -44,7 +44,7 @@ export default function MyCard({
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
                 <div>
                     <div className='flex items-center'>
-                        <h2 className='mb-2'>ИП "Jukte"</h2>
+                        <h2 className='mb-2'>{companyName}</h2>
                     </div>
                     <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/product.svg" alt=""/>

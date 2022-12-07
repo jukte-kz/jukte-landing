@@ -217,6 +217,7 @@ export default function createOrders() {
                 logPrice: parseInt(logPrice.replace(/\s/g, '')),
                 distance: parseInt(distance.replace(/\s/g, '')),
                 time: new Date(),
+                ownerCompany: Cookies.get('companyName')
             }),
             headers: {
                 'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
