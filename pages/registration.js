@@ -156,7 +156,7 @@ export default function Registration () {
                             <label htmlFor="bordered-radio-0"
                                    className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">
                                 {t("registration.confirm")} <br/>
-                                <p onClick={() => {router.push('/lawPage')}} className="mt-2 text-link">Политика конфиденциальности</p>
+                                <p onClick={() => {router.push('/lawPage')}} className="mt-2 text-link underline">{t("registration.lawLink")}</p>
                             </label>
                         </div>
                     </div>
@@ -282,6 +282,13 @@ export default function Registration () {
                                 {errMessage}
                             </h2>
                         )}
+                    </div>
+                    <div className='p-4 mb-4 rounded flex items-center bg-[#4F52FF]'>
+                        <img src="/assets/icon/warning.svg" alt=""/>
+                        <div>
+                            <p className='ml-4 text-warning' dangerouslySetInnerHTML={{ __html:t('registration.support') }}>
+                            </p>
+                        </div>
                     </div>
                     <button type='button' disabled={!checkComplete} onClick={postRegister} className='flex items-center'>
                         <p className="w-full">{t('welcome.registration')}</p>

@@ -30,7 +30,9 @@
     "iinLabel": "ЖСН енгізіңіз (Қазақстанның резидент еместері үшін құжат нөмірі)",
     "phoneLabel": "Телефон нөмірін енгізіңіз",
     "passwordLabel": "6 таңбалы пин кодын ойлап табыңыз",
-    "transportLabel": "Көлік түрін таңдаңыз"
+    "transportLabel": "Көлік түрін таңдаңыз",
+    "lawLink": "Құпиялылық саясаты",
+    "support": "Тіркеуге қатысты сұрақтарыңыз болса, <a href=\"https://telegram.me/jukte/\" class=\"underline font-bold text-white\">қолдау қызметіне</a> хабарласыңыз"
   },
   "home": {
     "exit": "Шығу",

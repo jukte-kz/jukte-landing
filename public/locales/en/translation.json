@@ -30,7 +30,9 @@
     "iinLabel": "Enter IIN (for non-residents of Kazakhstan document number)",
     "phoneLabel": "Enter phone number",
     "passwordLabel": "Come up with a 6-digit pin code",
-    "transportLabel": "Choose the type of transport"
+    "transportLabel": "Choose the type of transport",
+    "lawLink": "Privacy policy",
+    "support": "If you have any questions about registrations, please contact <a href=\"https://telegram.me/jukte/\" class=\"underline font-bold text-white\">support</a>"
   },
   "home": {
     "exit": "Exit",
