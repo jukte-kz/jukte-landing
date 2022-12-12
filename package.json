@@ -10,6 +10,7 @@
     "export": "npm run build && next export"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.2",
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
     "flowbite": "^1.5.2",

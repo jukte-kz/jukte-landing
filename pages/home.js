@@ -208,7 +208,10 @@ export default function Home () {
                                         return (
                                             data.ownerRole === 'logistician' ? (
                                                 <MyCard
-                                                    transfer={data.transfer}
+                                                    transfer1={data.transfer1}
+                                                    transfer2={data.transfer2}
+                                                    transfer3={data.transfer3}
+                                                    transfer4={data.transfer4}
                                                     key={index}
                                                     shipment={data.loadType}
                                                     cub={data.cubProduct}

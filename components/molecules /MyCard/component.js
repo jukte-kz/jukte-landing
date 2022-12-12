@@ -7,7 +7,7 @@ import 'moment/locale/ru';
 
 export default function MyCard({
                                    shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                   description, status, clickDelete, id, detail, transfer, time, companyName
+                                   description, status, clickDelete, id, detail, time, companyName, transfer1, transfer2, transfer3, transfer4
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -52,7 +52,13 @@ export default function MyCard({
                     </div>
                     <div className='flex items-center'>
                         <img className='mr-2' src="/assets/icon/distance.svg" alt=""/>
-                        <p className='font-bold'>{from} - {transfer === undefined ? (''):(transfer + ' - ')} {to}</p>
+                        <p className='font-bold'>
+                          {from} -
+                          {transfer1 && (' ' + transfer1 + '-')}
+                          {transfer2 && (' ' + transfer2 + '-')}
+                          {transfer3 && (' ' + transfer3 + '-')}
+                          {transfer4 && (' ' + transfer4 + '-')}
+                          {to}</p>
                     </div>
                 </div>
             </div>
