@@ -7,7 +7,7 @@ import 'moment/locale/ru';
 
 
 export default function DriverCard({
-                                       shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
+                                       shipment, product, cub, price, logPrice, weight, date, type, from, to, distance, clickDelete,
                                        description, status, phone, role, id, onClick, transfer, time, companyName, transfer1, transfer2, transfer3, transfer4
 }) {
     const [show, setShow] = useState(false);
@@ -97,7 +97,7 @@ export default function DriverCard({
                     </div>
                     {role === 'driver' && (
                         status !== 'inProgress' ? (
-                            <button className="w-full">
+                            <button className="w-full" onClick={clickDelete}>
                                 <div className='mb-2 w-full flex justify-center delete-button rounded'>
                                     {t("card.delete")}
                                 </div>

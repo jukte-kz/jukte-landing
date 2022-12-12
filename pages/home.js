@@ -265,9 +265,9 @@ export default function Home () {
                                                     product={data.product}
                                                     time={data.time}
                                                     companyName={data.ownerCompany}
-                                                  clickDelete={() => {
-                                                      deleteOrder(data._id)
-                                                  }}
+                                                      clickDelete={() => {
+                                                          deleteOrder(data._id)
+                                                      }}
                                                 />
                                             )
                                         )
