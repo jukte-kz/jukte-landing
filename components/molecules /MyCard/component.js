@@ -58,7 +58,8 @@ export default function MyCard({
                           {transfer2 && (' ' + transfer2 + '-')}
                           {transfer3 && (' ' + transfer3 + '-')}
                           {transfer4 && (' ' + transfer4 + '-')}
-                          {to}</p>
+                          {to}
+                        </p>
                     </div>
                 </div>
             </div>

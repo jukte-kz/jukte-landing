@@ -109,6 +109,10 @@ export default function driverOrders() {
                                                 phone={data.ownerPhone}
                                                 product={data.product}
                                                 companyName={data.ownerCompany}
+                                                transfer1={data.transfer1}
+                                                transfer2={data.transfer2}
+                                                transfer3={data.transfer3}
+                                                transfer4={data.transfer4}
                                             />
                                         )
                                     })

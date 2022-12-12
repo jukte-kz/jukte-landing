@@ -8,7 +8,7 @@ import 'moment/locale/ru';
 
 export default function DriverCard({
                                        shipment, product, cub, price, logPrice, weight, date, type, from, to, distance,
-                                       description, status, phone, role, id, onClick, transfer, time, companyName
+                                       description, status, phone, role, id, onClick, transfer, time, companyName, transfer1, transfer2, transfer3, transfer4
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
@@ -49,7 +49,14 @@ export default function DriverCard({
                 </div>
                 <div className='flex items-center'>
                     <img className='mr-2' src="/assets/icon/distance.svg" alt=""/>
-                    <p className='font-bold'>{from} - {transfer === undefined ? (''):(transfer + ' - ')} {to}</p>
+                    <p className='font-bold'>
+                      {from} -
+                      {transfer1 && (' ' + transfer1 + '-')}
+                      {transfer2 && (' ' + transfer2 + '-')}
+                      {transfer3 && (' ' + transfer3 + '-')}
+                      {transfer4 && (' ' + transfer4 + '-')}
+                      {to}
+                    </p>
                 </div>
             </div>
             {show && (

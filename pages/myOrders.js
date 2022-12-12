@@ -140,6 +140,10 @@ export default function MyOrders() {
                                                             deleteOrder(data._id)
                                                         }}
                                                         companyName={data.ownerCompany}
+                                                        transfer1={data.transfer1}
+                                                        transfer2={data.transfer2}
+                                                        transfer3={data.transfer3}
+                                                        transfer4={data.transfer4}
                                                     />
                                                 </>
                                             )
@@ -177,6 +181,10 @@ export default function MyOrders() {
                                                         deleteOrder(data._id)
                                                     }}
                                                     companyName={data.ownerCompany}
+                                                    transfer1={data.transfer1}
+                                                    transfer2={data.transfer2}
+                                                    transfer3={data.transfer3}
+                                                    transfer4={data.transfer4}
                                                 />
                                             )
                                         })
