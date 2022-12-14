@@ -186,7 +186,10 @@ export default function Home () {
                         <LinkBlock removeUrl='/createDriverOrders' image='/assets/icon/createOrders.svg' title={t("home.createDriverOrder")} />
                     )}
                     {userInfo.role === 'driver' && (
-                      <LinkBlock removeUrl='https://api.paybox.money/payment.php?pg_merchant_id=546728&pg_amount=5000&pg_currency=KZT&pg_description=%D0%A3%D1%81%D0%BB%D1%83%D0%B3%D0%B8+%D1%81%D0%B0%D0%B9%D1%82%D0%B0&pg_salt=vDZOYGx9r3JhaI4o&pg_language=ru&pg_sig=e0ce8a46ebb56822b103c791333b996e' image='/assets/icon/pay.svg' title={"Оплатить услуги сайта"} />
+                      <LinkBlock removeUrl='https://api.paybox.money/payment.php?pg_merchant_id=546728&pg_amount=5000&pg_currency=KZT&pg_description=%D0%A3%D1%81%D0%BB%D1%83%D0%B3%D0%B8+%D1%81%D0%B0%D0%B9%D1%82%D0%B0&pg_salt=vDZOYGx9r3JhaI4o&pg_language=ru&pg_sig=e0ce8a46ebb56822b103c791333b996e' image='/assets/icon/pay.svg' title={t("home.pay")} />
+                    )}
+                    {userInfo.role === 'driver' && (
+                      <LinkBlock removeUrl='https://wa.me/77054051303' image='/assets/icon/waranty.svg' title={t("home.insurance")} />
                     )}
                     <LinkBlock removeUrl='/settings' title={t("home.settings")} image='/assets/icon/settings.svg' />
                     <LinkBlock removeUrl='/faq' title={t("home.faq")} image='/assets/icon/faq.svg' />

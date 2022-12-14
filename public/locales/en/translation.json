@@ -62,7 +62,9 @@
     "orderMatch": "Did you agree on the application?",
     "noVer": "This text notifies you that, after registration, you have not passed verification. In order to use our service, we ask you to pass verification.",
     "noVerButton": "Pass verification",
-    "noPay": "The free trial month has ended. For further use of the site, we ask you to pay for the services of the site in the amount of 5000 tenge."
+    "noPay": "The free trial month has ended. For further use of the site, we ask you to pay for the services of the site in the amount of 5000 tenge.",
+    "pay": "Pay for site",
+    "insurance": "Insure the car"
   },
   "faq": {
     "question1": "Cost of using the site?",

@@ -340,7 +340,7 @@ export default function createOrders() {
                                         type="text"
                                         placeholder={myOrderRedact.product}
                                         required={true}
-                                        sizing="lg"
+                                        sizing="md"
                                         value={product}
                                         onChange={onChangeProduct}
                                     />
@@ -374,7 +374,7 @@ export default function createOrders() {
                                     endDate={endDate}
                                     placeholderText={myOrderRedact.date}
                                     dateFormatCalendar="MMMM"
-                                    className='block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-4'
+                                    className='block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2'
                                     yearDropdownItemNumber={100}
                                     scrollableYearDropdown
                                     minDate={new Date()}
@@ -394,7 +394,7 @@ export default function createOrders() {
                                 </div>
                                 {myOrderRedact && (
                                     <Select
-                                        className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2"
+                                        className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-1"
                                         classNamePrefix="name"
                                         placeholder={myOrderRedact.type}
                                         options={transport}
@@ -410,7 +410,7 @@ export default function createOrders() {
                             </div>
                             {myOrderRedact && (
                                 <Select
-                                    className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2"
+                                    className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-1"
                                     classNamePrefix="name"
                                     placeholder={myOrderRedact.loadType}
                                     options={transportUp}
@@ -435,7 +435,7 @@ export default function createOrders() {
                                             type="tel"
                                             placeholder={'тонн | ' + myOrderRedact.weight}
                                             required={true}
-                                            sizing="lg"
+                                            sizing="md"
                                         />
                                     )}
                                 </InputMask>
@@ -458,7 +458,7 @@ export default function createOrders() {
                                             id="distance"
                                             type="tel"
                                             placeholder={'м3 | ' + myOrderRedact.cubProduct}
-                                            sizing="lg"
+                                            sizing="md"
                                         />
                                     )}
                                 </InputMask>
@@ -479,7 +479,7 @@ export default function createOrders() {
                                     value={distance}
                                     placeholder={myOrderRedact.distance + ' км'}
                                     required={true}
-                                    sizing="lg"
+                                    sizing="md"
                                 />
                             )}
                         </div>
@@ -499,7 +499,7 @@ export default function createOrders() {
                                     type="text"
                                     placeholder={myOrderRedact.description}
                                     required={true}
-                                    sizing="lg"
+                                    sizing="md"
                                 />
                             )}
                         </div>
@@ -517,7 +517,7 @@ export default function createOrders() {
                                     value={price}
                                     placeholder={myOrderRedact.price + ' ₸'}
                                     required={true}
-                                    sizing="lg"
+                                    sizing="md"
                                 />
                             )}
                         </div>
@@ -535,7 +535,7 @@ export default function createOrders() {
                                     value={logPrice}
                                     placeholder={myOrderRedact.logPrice + ' ₸'}
                                     required={true}
-                                    sizing="lg"
+                                    sizing="md"
                                 />
                             )}
                         </div>
@@ -570,10 +570,10 @@ export default function createOrders() {
                 </Modal.Footer>
             </Modal>
             {mapModal && (
-              <div className="w-screen h-screen z-40 absolute inset-0 bg-white">
+              <div className="custom-modal bg-white">
                   <div className="flex items-center justify-between p-4">
                       <h2 className="font-bold">Построение маршрута</h2>
-                      <button onClick={() => {
+                      <button className="p-2 bg-[#4f52ff] rounded text-white" onClick={() => {
                           setMapModal(false);
                       }}>Закрыть</button>
                   </div>
