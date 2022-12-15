@@ -23,19 +23,12 @@ export default function createDriverOrders() {
     const cubMask = 'м3 | 999';
 
     const [product, setProduct] = useState(' ');
-    const [transfer_1, setTransfer_1] = useState('');
-    const [transfer_2, setTransfer_2] = useState('');
-    const [transfer_3, setTransfer_3] = useState('');
-    const [transfer_4, setTransfer_4] = useState('');
-    const [transfer_5, setTransfer_5] = useState('');
     const [description, setDescription] = useState('');
     const [distance, setDistance] = useState('');
     const [weight, setWeight] = useState('');
     const [cubProduct, setCubProduct] = useState('');
     const [dateRange, setDateRange] = useState([null, null]);
     const [date, endDate] = dateRange;
-    const [fromPoint, setFromPoint] = useState('');
-    const [toPoint, setToPoint] = useState('');
     const [transportType, setTransportType] = useState('');
     const [transportLoading, setTransportLoading] = useState('');
     const [price, setPrice] = useState('');
@@ -44,6 +37,7 @@ export default function createDriverOrders() {
     const [checkSendOrder, setCheckSendOrder] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showLawError, setShowLawError] = useState(false);
+    const [mapModal, setMapModal] = useState(false);
     const [cancel, setCancel] = useState(false);
     const map = useRef(null);
     const [from, setFrom] = useState('');
@@ -99,30 +93,32 @@ export default function createDriverOrders() {
         });
     };
 
-    const mapRef = useRef();
     const router = useRouter();
     const { t } = useTranslation();
+
+    const onChangeMapTransfer = useCallback(() => {
+        if (countWays < 1) {
+            setCountWay1('');
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 2) {
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 3) {
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 4) {
+            setCountWay4('');
+        }
+    }, []);
 
     const onChangeDescription = useCallback((event) => {
         setDescription(event.target.value);
     }, []);
     const onChangeProduct = useCallback((event) => {
         setProduct(event.target.value);
-    }, []);
-    const onChangeTransfer_1 = useCallback((event) => {
-        setTransfer_1(event.target.value);
-    }, []);
-    const onChangeTransfer_2 = useCallback((event) => {
-        setTransfer_2(event.target.value);
-    }, []);
-    const onChangeTransfer_3 = useCallback((event) => {
-        setTransfer_3(event.target.value);
-    }, []);
-    const onChangeTransfer_4 = useCallback((event) => {
-        setTransfer_4(event.target.value);
-    }, []);
-    const onChangeTransfer_5 = useCallback((event) => {
-        setTransfer_5(event.target.value);
     }, []);
     const onChangeWeight = useCallback((event) => {
         setWeight(event.target.value.split(' ')[2]);
@@ -241,93 +237,13 @@ export default function createDriverOrders() {
             <div className='settings-main py-6 px-4'>
                 <h1>{t("createOrders.title")}</h1>
                 <hr className='mt-4' />
+                <button
+                  className="p-2 bg-[#4f52ff] text-white rounded w-full mb-3"
+                  onClick={() => {setMapModal(true)}}
+                >
+                    Проложить маршрут
+                </button>
                 <form className='flex flex-col mt-4 login-form'>
-                    <div className="flex gap-2 flex-col mt-4">
-                        <TextInput
-                          id="from"
-                          type="text"
-                          placeholder='Откуда'
-                          sizing="md"
-                          onChange={onChangeFrom}
-                          value={from}
-                        />
-                        {countWays >= 1 && (
-                          <TextInput
-                            id='countWay-1'
-                            type="text"
-                            placeholder='Промежуточный пункт'
-                            sizing="md"
-                            onChange={onChangeCountWay1}
-                            value={countWay1}
-                          />
-                        )}
-                        {countWays >= 2 && (
-                          <TextInput
-                            id='countWay-2'
-                            type="text"
-                            placeholder='Промежуточный пункт'
-                            sizing="md"
-                            onChange={onChangeCountWay2}
-                            value={countWay2}
-                          />
-                        )}
-                        {countWays >= 3 && (
-                          <TextInput
-                            id='countWay-3'
-                            type="text"
-                            placeholder='Промежуточный пункт'
-                            sizing="md"
-                            onChange={onChangeCountWay3}
-                            value={countWay3}
-                          />
-                        )}
-                        {countWays >= 4 && (
-                          <TextInput
-                            id='countWay-4'
-                            type="text"
-                            placeholder='Промежуточный пункт'
-                            sizing="md"
-                            onChange={onChangeCountWay4}
-                            value={countWay4}
-                          />
-                        )}
-                        {countWays === 4 ? (
-                          <></>
-                        ) : (
-                          <button onClick={() => {setCountWays(countWays+1)}} className="my-2 text-[#4f52ff]">Добавить промежуточный пункт</button>
-                        )}
-                        {countWays > 0 && (
-                          <button onClick={() => {setCountWays(countWays-1)}} className="my-2 text-[#4f52ff]">Удалить промежуточный пункт</button>
-                        )}
-                        <TextInput
-                          id="to"
-                          type="text"
-                          placeholder='Куда'
-                          sizing="md"
-                          onChange={onChangeTo}
-                          value={to}
-                        />
-                        <button className="w-full bg-[#4f52ff] text-white p-2 rounded" onClick={() => {
-                            setRefreshMap(false)
-                            setTimeout(() => {setRefreshMap(true)}, 1000)
-                        }}>Обновить</button>
-                    </div>
-                    <div className='mt-8 rounded'>
-                        {refreshMap ? (
-                          <YMaps query={{apikey: '0fb09044-5132-48a3-8653-02425b40b298', load: "package.full"}} >
-                              <Map onLoad={addRoute} instanceRef={map} defaultState={{
-                                  center: [51.128207, 71.430420],
-                                  zoom: 9,
-                                  controls: ['zoomControl']
-                              }} style={{width: '100%', height: '400px'}}>
-                              </Map>
-                          </YMaps>
-                        ) : (
-                          <div className="w-full flex justify-center">
-                              <Spinner size={"xl"}></Spinner>
-                          </div>
-                        )}
-                    </div>
                     <div className='mb-auto'>
                         <div className='input-container'>
                             <div className="mb-2 block">
@@ -518,6 +434,112 @@ export default function createDriverOrders() {
                     </button>
                 </Modal.Footer>
             </Modal>
+            {mapModal && (
+              <div className="custom-modal bg-white">
+                  <div className="flex items-center justify-between p-4">
+                      <h2 className="font-bold">Построение маршрута</h2>
+                      <button className="p-2 bg-[#4f52ff] rounded text-white" onClick={() => {
+                          setMapModal(false);
+                      }}>Закрыть</button>
+                  </div>
+                  <div className="px-4 flex gap-2 flex-col mt-4">
+                      <TextInput
+                        id="from"
+                        type="text"
+                        placeholder='Откуда'
+                        sizing="md"
+                        onChange={onChangeFrom}
+                        value={from}
+                      />
+                      {countWays >= 1 && (
+                        <TextInput
+                          id='countWay-1'
+                          type="text"
+                          placeholder={'Промежуточный пункт'}
+                          sizing="md"
+                          onChange={onChangeCountWay1}
+                          value={countWay1}
+                        />
+                      )}
+                      {countWays >= 2 && (
+                        <TextInput
+                          id='countWay-2'
+                          type="text"
+                          placeholder={'Промежуточный пункт'}
+                          sizing="md"
+                          onChange={onChangeCountWay2}
+                          value={countWay2}
+                        />
+                      )}
+                      {countWays >= 3 && (
+                        <TextInput
+                          id='countWay-3'
+                          type="text"
+                          placeholder={'Промежуточный пункт'}
+                          sizing="md"
+                          onChange={onChangeCountWay3}
+                          value={countWay3}
+                        />
+                      )}
+                      {countWays >= 4 && (
+                        <TextInput
+                          id='countWay-4'
+                          type="text"
+                          placeholder={'Промежуточный пункт'}
+                          sizing="md"
+                          onChange={onChangeCountWay4}
+                          value={countWay4}
+                        />
+                      )}
+                      {countWays === 4 ? (
+                        <></>
+                      ) : (
+                        <button onClick={() => {
+                            setCountWays(countWays+1);
+                            console.log(countWays);
+                        }} className="my-2 text-[#4f52ff]">
+                            Добавить промежуточный пункт
+                        </button>
+                      )}
+                      {countWays > 0 && (
+                        <button onClick={() => {
+                            setCountWays(countWays-1);
+                            onChangeMapTransfer();
+                        }} className="my-2 text-[#4f52ff]">
+                            Удалить промежуточный пункт
+                        </button>
+                      )}
+                      <TextInput
+                        id="to"
+                        type="text"
+                        placeholder='Куда'
+                        sizing="md"
+                        onChange={onChangeTo}
+                        value={to}
+                      />
+                      <button className="w-full bg-[#4f52ff] text-white p-2 rounded" onClick={() => {
+                          setRefreshMap(false)
+                          setTimeout(() => {setRefreshMap(true)}, 1000)
+                      }}>Обновить</button>
+                  </div>
+                  <div className='mt-8 px-4 rounded'>
+                      {refreshMap ? (
+                        <YMaps query={{apikey: '0fb09044-5132-48a3-8653-02425b40b298', load: "package.full"}} >
+                            <Map onLoad={addRoute} instanceRef={map} defaultState={{
+                                center: [51.128207, 71.430420],
+                                zoom: 9,
+                                controls: ['zoomControl']
+                            }} style={{width: '100%', height: '400px'}}>
+                            </Map>
+                        </YMaps>
+                      ) : (
+                        <div className="w-full flex justify-center">
+                            <Spinner size={"xl"}></Spinner>
+                        </div>
+                      )}
+                  </div>
+              </div>
+            )}
         </div>
     )
 }

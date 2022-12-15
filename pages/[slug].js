@@ -238,6 +238,24 @@ export default function createOrders() {
             parseInt(price.replace(/\s/g, '')) > 0);
     })
 
+    const onChangeMapTransfer = useCallback(() => {
+        if (countWays < 1) {
+            setCountWay1('');
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 2) {
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 3) {
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 4) {
+            setCountWay4('');
+        }
+    }, []);
+
     useEffect(() => {
         setRoud(router.asPath.replace('/',''))
         if (roud) {
@@ -632,7 +650,10 @@ export default function createOrders() {
                         <button onClick={() => {setCountWays(countWays+1)}} className="my-2 text-[#4f52ff]">Добавить промежуточный пункт</button>
                       )}
                       {countWays > 0 && (
-                        <button onClick={() => {setCountWays(countWays-1)}} className="my-2 text-[#4f52ff]">Удалить промежуточный пункт</button>
+                        <button onClick={() => {
+                            setCountWays(countWays-1);
+                            onChangeMapTransfer();
+                        }} className="my-2 text-[#4f52ff]">Удалить промежуточный пункт</button>
                       )}
                       <TextInput
                         id="to"
