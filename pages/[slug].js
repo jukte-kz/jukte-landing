@@ -1,77 +1,21 @@
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import Header from "../components/atoms/Header/component";
-import {Label, Modal, Spinner, Textarea, TextInput} from "flowbite-react";
-import InputMask from "react-input-mask";
-import {useCallback, useEffect, useRef, useState} from "react";
-import Cookies from "js-cookie";
+import {Map, YMaps} from "react-yandex-maps";
+import {Label, Spinner, Textarea, TextInput} from "flowbite-react";
+import {useRouter} from "next/router";
+import {useTranslation} from "react-i18next";
 import axios from "axios";
 import qs from "qs";
-import DatePicker from 'react-datepicker';
-import MaskedInput from 'react-maskedinput';
-import Select from 'react-select';
-import React from "react";
-import Script from "next/script";
-import {useRouter} from "next/router";
-import moment from "moment/moment";
-import {transportUp} from "../public/assets/data/transportUp";
+import moment from "moment";
+import Cookies from "js-cookie";
+import {transport} from "../public/assets/data/transportType";
+import DatePicker from "react-datepicker";
 import {ru} from "date-fns/locale";
-import '../utils/i18next';
-import { useTranslation } from "react-i18next";
-import {Map, YMaps} from "react-yandex-maps";
+import Select from "react-select";
+import {transportUp} from "../public/assets/data/transportUp";
+import InputMask from "react-input-mask";
 
-export const transport = [
-    {
-        value: 1,
-        label: 'Рефрижератор',
-        price: 600
-    },
-    {
-        value: 2,
-        label: 'Самосвал',
-        price: 30
-    },
-    {
-        value: 3,
-        label: 'Тралл',
-        price: 1000
-    },
-    {
-        value: 4,
-        label: 'Изотерм',
-        price: 470
-    },
-    {
-        value: 5,
-        label: 'Бортовой',
-        price: 470
-    },
-    {
-        value: 6,
-        label: 'Крытый',
-        price: 470
-    },
-    {
-        value: 7,
-        label: 'Открытый',
-        price: 470
-    },
-    {
-        value: 8,
-        label: 'Тент',
-        price: 470
-    },
-    {
-        value: 9,
-        label: 'Зерновоз',
-        price: 35
-    },
-    {
-        value: 10,
-        label: 'Газель',
-        price: 200
-    },
-];
-
-export default function createOrders() {
+export default function refreshOrders() {
     const weightMask = 'тонн | 99';
     const cubMask = 'м3 | 999';
 
@@ -83,21 +27,12 @@ export default function createOrders() {
     const [cubProduct, setCubProduct] = useState('');
     const [dateRange, setDateRange] = useState([null, null]);
     const [date, endDate] = dateRange;
-    const [fromPoint, setFromPoint] = useState('');
-    const [toPoint, setToPoint] = useState('');
     const [transportType, setTransportType] = useState('');
-    const [showErrorLabel, setShowErrorLabel] = useState(false);
-    const [price, setPrice] = useState('');
-    const [logPrice, setLogPrice] = useState('');
     const [transportLoading, setTransportLoading] = useState('');
+    const [price, setPrice] = useState('');
     const [checkCalc, setCheckCalc] = useState(false);
+    const [logPrice, setLogPrice] = useState('');
     const [checkSendOrder, setCheckSendOrder] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [myOrderRedact, setMyOrderRedact] = useState(null);
-    const [roud, setRoud] = useState(null);
-    const [role, setRole] = useState(null);
-    const [showLawError, setShowLawError] = useState(false);
-    const [mapModal, setMapModal] = useState(false);
     const map = useRef(null);
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
@@ -107,16 +42,23 @@ export default function createOrders() {
     const [countWay2, setCountWay2] = useState('');
     const [countWay3, setCountWay3] = useState('');
     const [countWay4, setCountWay4] = useState('');
+    const [currentStep, setCurrentStep] = useState(0);
+    const [disButton, setDisButton] = useState(true);
+    const [myOrders, setMyOrders] = useState(Array);
+    const [cancelArchive, setCancelArchive] = useState(false);
+    const [myOrderRedact, setMyOrderRedact] = useState(null);
+    const [role, setRole] = useState(null);
+    const [roud, setRoud] = useState(null);
 
+    const router = useRouter();
+    const { t } = useTranslation();
 
     const onChangeFrom = useCallback((event) => {
         setFrom(event.target.value);
     }, []);
-
     const onChangeTo = useCallback((event) => {
         setTo(event.target.value);
     }, []);
-
     const onChangeCountWay1 = useCallback((event) => {
         setCountWay1(event.target.value);
     }, []);
@@ -129,36 +71,6 @@ export default function createOrders() {
     const onChangeCountWay4 = useCallback((event) => {
         setCountWay4(event.target.value);
     }, []);
-
-    const addRoute = (ymaps) => {
-        const multiRoute = new ymaps.multiRouter.MultiRoute(
-          {
-              referencePoints: [from, countWay1, countWay2, countWay3, countWay4, to],
-              params: {
-                  routingMode: "auto"
-              }
-          },
-          {
-              boundsAutoApply: true
-          }
-        );
-        map.current.geoObjects.add(multiRoute);
-        multiRoute.model.events.add('requestsuccess', function() {
-            const activeRoute = multiRoute.getActiveRoute();
-            if (activeRoute) {
-                setDescription(activeRoute.properties.get("duration").text);
-                setDistance(activeRoute.properties.get("distance").text);
-            }
-        });
-    };
-
-    const [myOrders, setMyOrders] = useState(Array);
-    const [cancelArchive, setCancelArchive] = useState(false);
-
-    const mapRef = useRef()
-    const router = useRouter();
-    const { t } = useTranslation();
-
     const onChangeDescription = useCallback((event) => {
         setDescription(event.target.value);
     }, []);
@@ -168,18 +80,42 @@ export default function createOrders() {
     const onChangeDetail = useCallback((event) => {
         setDetail(event.target.value);
     }, []);
+    const onChangeWeight = useCallback((event) => {
+        setWeight(event.target.value.split(' ')[2]);
+    })
     const onChangeCubProduct = useCallback((event) =>  {
         setCubProduct(event.target.value.split(' ')[2]);
     })
-    const onChangeWeight = useCallback((event) => {
-        setWeight(event.target.value.split(' ')[2]);
-        if (parseFloat(event.target.value) > 20) {
-            setShowErrorLabel(true)
-        } else {
-            setShowErrorLabel(false)
+    const onChangeMapTransfer = useCallback(() => {
+        if (countWays < 1) {
+            setCountWay1('');
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 2) {
+            setCountWay2('');
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 3) {
+            setCountWay3('');
+            setCountWay4('');
+        } else if (countWays < 4) {
+            setCountWay4('');
         }
-    })
+    }, []);
+    const onChangeDate = (update) => {
+        setDateRange(update);
+    }
+    const onChangeSelect = (e) => {
+        setTransportType(e.label);
+    }
+    const onChangeSelectLoadTransport = (e) => {
+        setTransportLoading(e.label);
+    }
 
+    function parseToDate(date) {
+        Date.parse(date);
+    };
 
     useEffect(() => {
         if(!cancelArchive) {
@@ -211,61 +147,79 @@ export default function createOrders() {
                 }
             })
         }
-    })
-
-    useEffect(() => {
-        if (parseInt(weight) > 22) {
-            if (transportType !== 'Тралл' && transportType !== 'Самосвал') {
-                setShowLawError(true);
-            }
-        } else {
-            setShowLawError(false);
-        }
-    })
-
-    useEffect(() => {
-        setCheckCalc(distance.length > 0 && weight.length > 0)
-        setCheckSendOrder(
-            distance.length > 0 &&
-            weight.length > 0 && date &&
-            description.length > 0 &&
-            product.length &&
-            parseInt(price.replace(/\s/g, '')) > 0);
-    })
-
-    const onChangeMapTransfer = useCallback(() => {
-        if (countWays < 1) {
-            setCountWay1('');
-            setCountWay2('');
-            setCountWay3('');
-            setCountWay4('');
-        } else if (countWays < 2) {
-            setCountWay2('');
-            setCountWay3('');
-            setCountWay4('');
-        } else if (countWays < 3) {
-            setCountWay3('');
-            setCountWay4('');
-        } else if (countWays < 4) {
-            setCountWay4('');
-        }
     }, []);
 
     useEffect(() => {
-        setRoud(router.asPath.replace('/',''))
+        setRoud(router.asPath.replace('/',''));
         if (roud) {
             setMyOrderRedact(myOrders.find(obj => {
                 return obj._id === roud
             }))
         }
-    })
+    });
 
-    const onChangeDate = (update) => {
-        setDateRange(update);
-    }
-    const onChangeSelect = (e) => {
-        setTransportLoading(e.label)
-    }
+    useEffect(() => {
+        if (myOrderRedact) {
+            setFrom(myOrderRedact.from);
+            setCountWay1(myOrderRedact.transfer1);
+            setCountWay2(myOrderRedact.transfer2);
+            setCountWay3(myOrderRedact.transfer3);
+            setCountWay4(myOrderRedact.transfer4);
+            setTo(myOrderRedact.to);
+            onClickRefreshMap();
+            setProduct(myOrderRedact.product);
+            setDescription(myOrderRedact.description);
+            setDistance(myOrderRedact.distance);
+            setDetail(myOrderRedact.detail);
+            if (role === 'driver') {
+                setDetail(myOrderRedact.product);
+            }
+        }
+    }, [myOrderRedact]);
+
+    useEffect(() => {
+        setCheckCalc(distance.length > 0 && weight.length > 0)
+        setCheckSendOrder(
+          weight.length > 0 && date &&
+          description.length > 0 &&
+          product.length &&
+          parseInt(price.replace(/\s/g, '')) > 0);
+    });
+
+    const addRoute = (ymaps) => {
+        const multiRoute = new ymaps.multiRouter.MultiRoute(
+          {
+              referencePoints: [from, countWay1, countWay2, countWay3, countWay4, to],
+              params: {
+                  routingMode: "auto"
+              }
+          },
+          {
+              boundsAutoApply: true
+          }
+        );
+        map.current.geoObjects.add(multiRoute);
+        multiRoute.model.events.add('requestsuccess', function() {
+            const activeRoute = multiRoute.getActiveRoute();
+            if (activeRoute) {
+                setDescription(activeRoute.properties.get("duration").text);
+                setDistance(activeRoute.properties.get("distance").text);
+            }
+        });
+    };
+
+    const nextStep = useCallback(() => {
+        setCurrentStep((currentStep) => currentStep + 1);
+    }, []);
+
+    const prevStep = useCallback(() => {
+        setCurrentStep((currentStep) => currentStep - 1);
+    }, []);
+
+    const onClickRefreshMap = useCallback(() => {
+        setRefreshMap(false);
+        setTimeout(() => {setRefreshMap(true)}, 1000);
+    }, []);
 
     const sendOrderData = () => {
         axios({
@@ -278,12 +232,13 @@ export default function createOrders() {
                 weight: parseInt(weight.replace(/\s/g, '')),
                 date: `${moment(date).format('L')} - ${moment(endDate).format('L')}`,
                 type: transportType,
-                from: fromPoint,
-                to: toPoint,
+                from: from,
+                to: to,
                 loadType: transportLoading,
                 cubProduct: cubProduct,
                 logPrice: parseInt(logPrice.replace(/\s/g, '')),
                 distance: parseInt(distance.replace(/\s/g, '')),
+                detail: detail,
                 time: new Date(),
                 ownerCompany: Cookies.get('companyName'),
                 transfer1: countWay1,
@@ -297,11 +252,10 @@ export default function createOrders() {
             }
         }).then((res) => {
             if (res.status === 200) {
-                setShowModal(true);
+                nextStep();
             }
         })
     }
-
     const calcPrice = () => {
         let corrDistance = parseInt(distance.replace(/\s/g, ''));
         let transportObj = transport.filter(obj => {
@@ -321,252 +275,377 @@ export default function createOrders() {
         }
     }
     const endCreateOrder = () => {
-        setShowModal(false);
         router.push('/home');
     }
 
     return (
-        <div>
-            <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}/>
-            <div className='settings-main py-6 px-4'>
-                <h1>{t("createOrders.updateOrder")}</h1>
-                <hr className='mt-4' />
-                <button
-                  className="p-2 bg-[#4f52ff] text-white rounded w-full mb-3"
-                  onClick={() => {setMapModal(true)}}
-                >
-                    Проложить маршрут
-                </button>
-                <form className='flex flex-col mt-2 login-form'>
-                    <div className='mb-auto'>
-                        {role !== 'driver' && (
+      <div>
+          <Header removeUrl='/home' text={t("home.mainPage")} mainHeader={true}/>
+          <div className='settings-main py-6 px-4'>
+              {currentStep === 0 && (
+                <div className='flex justify-between items-center'>
+                    <h1>{t("createOrders.updateOrder")}</h1>
+                    <div className="p-2 border-2 border-[#4f52ff] rounded">
+                        <p>{currentStep+1} {t("createOrders.step")} / 4</p>
+                    </div>
+                </div>
+              )}
+              {currentStep > 0 && (
+                <div className='flex justify-between items-center'>
+                    <button
+                      className="py-2 px-6 bg-[#4f52ff] text-white rounded"
+                      onClick={prevStep}
+                    >
+                        {t("createOrders.prev")}
+                    </button>
+                    <div className="p-2 border-2 border-[#4f52ff] ml-[10%] rounded">
+                        <p>{currentStep+1} {t("createOrders.step")} / 4</p>
+                    </div>
+                </div>
+              )}
+              <hr className='mt-4' />
+              {currentStep === 0 && (
+                <>
+                    <div className="flex gap-2 flex-col mt-4">
+                        <TextInput
+                          id="from"
+                          type="text"
+                          placeholder={t("createOrders.from")}
+                          sizing="md"
+                          onChange={onChangeFrom}
+                          value={from}
+                        />
+                        {countWays >= 1 && (
+                          <TextInput
+                            id='countWay-1'
+                            type="text"
+                            placeholder={t("createOrders.transfer")}
+                            sizing="md"
+                            onChange={onChangeCountWay1}
+                            value={countWay1}
+                          />
+                        )}
+                        {countWays >= 2 && (
+                          <TextInput
+                            id='countWay-2'
+                            type="text"
+                            placeholder={t("createOrders.transfer")}
+                            sizing="md"
+                            onChange={onChangeCountWay2}
+                            value={countWay2}
+                          />
+                        )}
+                        {countWays >= 3 && (
+                          <TextInput
+                            id='countWay-3'
+                            type="text"
+                            placeholder={t("createOrders.transfer")}
+                            sizing="md"
+                            onChange={onChangeCountWay3}
+                            value={countWay3}
+                          />
+                        )}
+                        {countWays >= 4 && (
+                          <TextInput
+                            id='countWay-4'
+                            type="text"
+                            placeholder={t("createOrders.transfer")}
+                            sizing="md"
+                            onChange={onChangeCountWay4}
+                            value={countWay4}
+                          />
+                        )}
+                        {countWays === 4 ? (
+                          <></>
+                        ) : (
+                          <button onClick={() => {
+                              setCountWays(countWays+1);
+                          }} className="my-2 text-[#4f52ff]">
+                              {t("createOrders.addTransfer")}
+                          </button>
+                        )}
+                        {countWays > 0 && (
+                          <button onClick={() => {
+                              setCountWays(countWays-1);
+                              onChangeMapTransfer();
+                          }} className="my-2 text-[#4f52ff]">
+                              {t("createOrders.delTransfer")}
+                          </button>
+                        )}
+                        <TextInput
+                          id="to"
+                          type="text"
+                          placeholder={t("createOrders.to")}
+                          sizing="md"
+                          onChange={onChangeTo}
+                          value={to}
+                        />
+                        <button
+                          type='button'
+                          className="settings-button"
+                          onClick={() => {
+                              onClickRefreshMap();
+                          }}
+                        >{t("createOrders.refresh")}</button>
+                    </div>
+                    <div className='mt-8 rounded'>
+                        {refreshMap ? (
+                          <YMaps query={{apikey: '0fb09044-5132-48a3-8653-02425b40b298', load: "package.full"}} >
+                              <Map onLoad={addRoute} instanceRef={map} defaultState={{
+                                  center: [51.128207, 71.430420],
+                                  zoom: 9,
+                                  controls: ['zoomControl']
+                              }} style={{width: '100%', height: '400px'}}>
+                              </Map>
+                          </YMaps>
+                        ) : (
+                          <div className="w-full flex justify-center items-center h-[400px]">
+                              <Spinner size={"xl"}></Spinner>
+                          </div>
+                        )}
+                    </div>
+                    <div className="mt-8">
+                        <button
+                          type='button'
+                          className="settings-button"
+                          disabled={!distance}
+                          onClick={nextStep}
+                        >
+                            <p className="w-full">{t("createOrders.next")}</p>
+                        </button>
+                    </div>
+                </>
+              )}
+              {currentStep === 1 && (
+                <>
+                    <form className='flex flex-col mt-2 login-form'>
+                        <div className='mb-auto'>
+                            {role === 'logistician' && (
+                              <div className='input-container'>
+                                  <div className="mb-2 block">
+                                      <Label
+                                        htmlFor="product"
+                                        value={t("createOrders.product")}
+                                      />
+                                  </div>
+                                  <TextInput
+                                    id="product"
+                                    type="text"
+                                    placeholder=''
+                                    required={true}
+                                    sizing="md"
+                                    value={product}
+                                    onChange={onChangeProduct}
+                                  />
+                              </div>
+                            )}
                             <div className='input-container'>
                                 <div className="mb-2 block">
                                     <Label
-                                        htmlFor="product"
-                                        value={t("createOrders.product")}
+                                      htmlFor="desc"
+                                      value={t("createOrders.detail")}
                                     />
                                 </div>
-                                {myOrderRedact && (
-                                    <TextInput
-                                        id="product"
-                                        type="text"
-                                        placeholder={myOrderRedact.product}
-                                        required={true}
-                                        sizing="md"
-                                        value={product}
-                                        onChange={onChangeProduct}
-                                    />
-                                )}
+                                <Textarea value={detail} onChange={onChangeDetail} />
                             </div>
-                        )}
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="desc"
-                                    value={t("createOrders.detail")}
-                                />
-                            </div>
-                            {myOrderRedact && (
-                                <Textarea value={detail} onChange={onChangeDetail} placeholder={myOrderRedact.detail} />
-                            )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="surname"
-                                    value={t("createOrders.date")}
-                                />
-                            </div>
-                            {myOrderRedact && (
-                                <DatePicker
-                                    selected={date}
-                                    dateFormat="dd.MM.yyyy"
-                                    onChange={onChangeDate}
-                                    startDate={date}
-                                    endDate={endDate}
-                                    placeholderText={myOrderRedact.date}
-                                    dateFormatCalendar="MMMM"
-                                    className='block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2'
-                                    yearDropdownItemNumber={100}
-                                    scrollableYearDropdown
-                                    minDate={new Date()}
-                                    selectsRange={true}
-                                    isClearable={true}
-                                    onChange={(update) => {
-                                        setDateRange(update);
-                                    }}
-                                    locale={ru}
-                                />
-                            )}
-                        </div>
-                        {role === 'logistician' && (
                             <div className='input-container'>
-                                <div className='mb-2 block'>
-                                    <Label htmlFor="transport" value={t("createOrders.transport")} />
-                                </div>
-                                {myOrderRedact && (
-                                    <Select
-                                        className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-1"
-                                        classNamePrefix="name"
-                                        placeholder={myOrderRedact.type}
-                                        options={transport}
-                                        onChange={onChangeSelect}
-                                        isSearchable={false}
+                                <div className="mb-2 block">
+                                    <Label
+                                      htmlFor="surname"
+                                      value={t("createOrders.date")}
                                     />
-                                )}
+                                </div>
+                                <DatePicker
+                                  selected={date}
+                                  dateFormat="dd.MM.yyyy"
+                                  onChange={onChangeDate}
+                                  startDate={date}
+                                  endDate={endDate}
+                                  placeholderText="ДД.ММ.ГГГГ - ДД.ММ.ГГГГ"
+                                  dateFormatCalendar="MMMM"
+                                  className='block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-2'
+                                  yearDropdownItemNumber={100}
+                                  scrollableYearDropdown
+                                  minDate={new Date()}
+                                  selectsRange={true}
+                                  isClearable={true}
+                                  onChange={(update) => {
+                                      setDateRange(update);
+                                  }}
+                                  locale={ru}
+                                />
                             </div>
-                        )}
-                        <div className='input-container'>
-                            <div className='mb-2 block'>
-                                <Label htmlFor="transport" value={t("createOrders.upTransport")} />
-                            </div>
-                            {myOrderRedact && (
-                                <Select
+                            {role === 'logistician' && (
+                              <div className='input-container'>
+                                  <div className='mb-2 block'>
+                                      <Label htmlFor="transport" value={t("createOrders.transport")} />
+                                  </div>
+                                  <Select
                                     className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-1"
                                     classNamePrefix="name"
-                                    placeholder={myOrderRedact.loadType}
-                                    options={transportUp}
+                                    placeholder={t("createOrders.transport")}
+                                    options={transport}
                                     onChange={onChangeSelect}
                                     isSearchable={false}
-                                />
+                                  />
+                              </div>
                             )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="weight"
-                                    value={t("createOrders.weight")}
+                            <div className='input-container'>
+                                <div className='mb-2 block'>
+                                    <Label htmlFor="transportLoad" value={t("createOrders.upTransport")} />
+                                </div>
+                                <Select
+                                  className="react-select block w-full border focus\:ring-blue-500:focus disabled:cursor-not-allowed disabled:opacity-50 bg-gray-50 border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500 rounded-lg sm:text-md p-1"
+                                  classNamePrefix="name"
+                                  placeholder={t("createOrders.upTransport")}
+                                  options={transportUp}
+                                  onChange={onChangeSelectLoadTransport}
+                                  isSearchable={false}
                                 />
                             </div>
-                            {myOrderRedact && (
+                            <div className='input-container'>
+                                <div className="mb-2 block">
+                                    <Label
+                                      htmlFor="weight"
+                                      value={t("createOrders.weight")}
+                                    />
+                                </div>
                                 <InputMask value={weight} maskChar={null} onChange={onChangeWeight} mask={weightMask}>
                                     {(inputProps) => (
-                                        <TextInput
-                                            {...inputProps}
-                                            id="distance"
-                                            type="tel"
-                                            placeholder={'тонн | ' + myOrderRedact.weight}
-                                            required={true}
-                                            sizing="md"
-                                        />
+                                      <TextInput
+                                        {...inputProps}
+                                        id="distance"
+                                        type="tel"
+                                        placeholder='тонн | 0'
+                                        required={true}
+                                        sizing="md"
+                                      />
                                     )}
                                 </InputMask>
-                            )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="cubProduct"
-                                    value={t("createOrders.cubometr")}
-                                />
                             </div>
-                            {myOrderRedact && (
+                            <div className='input-container'>
+                                <div className="mb-2 block">
+                                    <Label
+                                      htmlFor="cubProduct"
+                                      value={t("createOrders.cubometr")}
+                                    />
+                                </div>
                                 <InputMask value={cubProduct} maskChar={null} onChange={onChangeCubProduct} mask={cubMask}>
                                     {(inputProps) => (
-                                        <TextInput
-                                            {...inputProps}
-                                            onChange={onChangeCubProduct}
-                                            value={cubProduct}
-                                            id="distance"
-                                            type="tel"
-                                            placeholder={'м3 | ' + myOrderRedact.cubProduct}
-                                            sizing="md"
-                                        />
+                                      <TextInput
+                                        {...inputProps}
+                                        onChange={onChangeCubProduct}
+                                        value={cubProduct}
+                                        id="distance"
+                                        type="tel"
+                                        placeholder='м3 | 0'
+                                        sizing="md"
+                                      />
                                     )}
                                 </InputMask>
-                            )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="distance"
-                                    value={t("createOrders.disctance")}
-                                />
                             </div>
-                            {myOrderRedact && (
-                                <TextInput
-                                    disabled
-                                    id="distance"
-                                    type="tel"
-                                    value={distance}
-                                    placeholder={myOrderRedact.distance + ' км'}
-                                    required={true}
-                                    sizing="md"
-                                />
-                            )}
                         </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="desc"
-                                    value={t("createOrders.time")}
-                                />
-                            </div>
-                            {myOrderRedact && (
-                                <TextInput
-                                    onChange={onChangeDescription}
-                                    value={description}
-                                    disabled
-                                    id="desc"
-                                    type="text"
-                                    placeholder={myOrderRedact.description}
-                                    required={true}
-                                    sizing="md"
-                                />
-                            )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="price"
-                                    value={t("createOrders.price")}
-                                />
-                            </div>
-                            {myOrderRedact && (
-                                <TextInput
-                                    disabled
-                                    id="price"
-                                    value={price}
-                                    placeholder={myOrderRedact.price + ' ₸'}
-                                    required={true}
-                                    sizing="md"
-                                />
-                            )}
-                        </div>
-                        <div className='input-container'>
-                            <div className="mb-2 block">
-                                <Label
-                                    htmlFor="price"
-                                    value={t("createOrders.priceLogistician")}
-                                />
-                            </div>
-                            {myOrderRedact && (
-                                <TextInput
-                                    disabled
-                                    id="price"
-                                    value={logPrice}
-                                    placeholder={myOrderRedact.logPrice + ' ₸'}
-                                    required={true}
-                                    sizing="md"
-                                />
-                            )}
-                        </div>
+                    </form>
+                    <button type='button' disabled={!checkCalc} className='flex items-center settings-button px-4 mt-4' onClick={() => {
+                        calcPrice();
+                        setDisButton(false);
+                    }}>
+                        <p className="w-full">{t("createOrders.calc")}</p>
+                    </button>
+                    <div className="mt-4">
+                        <button
+                          type='button'
+                          className="settings-button"
+                          disabled={disButton}
+                          onClick={() => {
+                              nextStep();
+                              setDisButton(true);
+                          }}
+                        >
+                            <p className="w-full">{t("createOrders.next")}</p>
+                        </button>
                     </div>
-                </form>
-                <button type='button' disabled={!checkCalc} className='flex items-center settings-button px-4 mt-4' onClick={calcPrice}>
-                    <p className="w-full">{t("createOrders.calc")}</p>
-                </button>
-                <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={sendOrderData}>
-                    <p className="w-full">{t("createOrders.updateOrder")}</p>
-                </button>
-            </div>
-            <Modal
-                show={showModal}
-                position="center"
-            >
-                <Modal.Body>
-                    <div className='w-full success-container'>
+                </>
+              )}
+              {currentStep === 2 && (
+                <>
+                    <div className='input-container'>
+                        <div className="mb-2 block">
+                            <Label
+                              htmlFor="distance"
+                              value={t("createOrders.distance")}
+                            />
+                        </div>
+                        <TextInput
+                          disabled
+                          id="distance"
+                          type="tel"
+                          value={distance}
+                          placeholder='0 км'
+                          required={true}
+                          sizing="md"
+                        />
+                    </div>
+                    <div className='input-container mt-4'>
+                        <div className="mb-2 block">
+                            <Label
+                              htmlFor="desc"
+                              value={t("createOrders.time")}
+                            />
+                        </div>
+                        <TextInput
+                          onChange={onChangeDescription}
+                          value={description}
+                          disabled
+                          id="desc"
+                          type="text"
+                          placeholder="0 ч."
+                          required={true}
+                          sizing="md"
+                        />
+                    </div>
+                    <div className='input-container mt-4'>
+                        <div className="mb-2 block">
+                            <Label
+                              htmlFor="price"
+                              value={t("createOrders.price")}
+                            />
+                        </div>
+                        <TextInput
+                          disabled
+                          id="price"
+                          value={price}
+                          placeholder='0 ₸'
+                          required={true}
+                          sizing="md"
+                        />
+                    </div>
+                    <div className='input-container mt-4'>
+                        <div className="mb-2 block">
+                            <Label
+                              htmlFor="price"
+                              value={t("createOrders.priceLogistician")}
+                            />
+                        </div>
+                        <TextInput
+                          disabled
+                          id="price"
+                          value={logPrice}
+                          placeholder='0 ₸'
+                          required={true}
+                          sizing="md"
+                        />
+                    </div>
+                    <div>
+                        <button type='button' disabled={!checkSendOrder} className='flex items-center settings-button px-4 mt-4' onClick={sendOrderData}>
+                            <p className="w-full">{t("createOrders.updateOrder")}</p>
+                        </button>
+                    </div>
+                </>
+              )}
+              {currentStep === 3 && (
+                <>
+                    <div className='w-full success-container mt-8'>
                         <p className='text-center'>{t("createOrders.updateSuccess")}</p>
                         <div className="success-animation mt-6">
                             <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -575,112 +654,18 @@ export default function createOrders() {
                             </svg>
                         </div>
                     </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className='w-full redirect-button' onClick={endCreateOrder}>
-                        {t("home.mainPage")}
-                    </button>
-                </Modal.Footer>
-            </Modal>
-            {mapModal && (
-              <div className="custom-modal bg-white">
-                  <div className="flex items-center justify-between p-4">
-                      <h2 className="font-bold">Построение маршрута</h2>
-                      <button className="p-2 bg-[#4f52ff] rounded text-white" onClick={() => {
-                          setMapModal(false);
-                      }}>Закрыть</button>
-                  </div>
-                  <div className="px-4 flex gap-2 flex-col mt-4">
-                      <TextInput
-                        id="from"
-                        type="text"
-                        placeholder={myOrderRedact.from}
-                        sizing="md"
-                        onChange={onChangeFrom}
-                        value={from}
-                      />
-                      {countWays >= 1 && (
-                        <TextInput
-                          id='countWay-1'
-                          type="text"
-                          placeholder={myOrderRedact.transfer1}
-                          sizing="md"
-                          onChange={onChangeCountWay1}
-                          value={countWay1}
-                        />
-                      )}
-                      {countWays >= 2 && (
-                        <TextInput
-                          id='countWay-2'
-                          type="text"
-                          placeholder={myOrderRedact.transfer2}
-                          sizing="md"
-                          onChange={onChangeCountWay2}
-                          value={countWay2}
-                        />
-                      )}
-                      {countWays >= 3 && (
-                        <TextInput
-                          id='countWay-3'
-                          type="text"
-                          placeholder={myOrderRedact.transfer3}
-                          sizing="md"
-                          onChange={onChangeCountWay3}
-                          value={countWay3}
-                        />
-                      )}
-                      {countWays >= 4 && (
-                        <TextInput
-                          id='countWay-4'
-                          type="text"
-                          placeholder={myOrderRedact.transfer4}
-                          sizing="md"
-                          onChange={onChangeCountWay4}
-                          value={countWay4}
-                        />
-                      )}
-                      {countWays === 4 ? (
-                        <></>
-                      ) : (
-                        <button onClick={() => {setCountWays(countWays+1)}} className="my-2 text-[#4f52ff]">Добавить промежуточный пункт</button>
-                      )}
-                      {countWays > 0 && (
-                        <button onClick={() => {
-                            setCountWays(countWays-1);
-                            onChangeMapTransfer();
-                        }} className="my-2 text-[#4f52ff]">Удалить промежуточный пункт</button>
-                      )}
-                      <TextInput
-                        id="to"
-                        type="text"
-                        placeholder={myOrderRedact.to}
-                        sizing="md"
-                        onChange={onChangeTo}
-                        value={to}
-                      />
-                      <button className="w-full bg-[#4f52ff] text-white p-2 rounded" onClick={() => {
-                          setRefreshMap(false)
-                          setTimeout(() => {setRefreshMap(true)}, 1000)
-                      }}>Обновить</button>
-                  </div>
-                  <div className='mt-8 px-4 rounded'>
-                      {refreshMap ? (
-                        <YMaps query={{apikey: '0fb09044-5132-48a3-8653-02425b40b298', load: "package.full"}} >
-                            <Map onLoad={addRoute} instanceRef={map} defaultState={{
-                                center: [51.128207, 71.430420],
-                                zoom: 9,
-                                controls: ['zoomControl']
-                            }} style={{width: '100%', height: '400px'}}>
-                            </Map>
-                        </YMaps>
-                      ) : (
-                        <div className="w-full flex justify-center">
-                            <Spinner size={"xl"}></Spinner>
-                        </div>
-                      )}
-                  </div>
-              </div>
-            )}
-        </div>
+                    <div className="mt-8">
+                        <button
+                          type="button"
+                          className='w-full settings-button'
+                          onClick={endCreateOrder}
+                        >
+                            {t("home.mainPage")}
+                        </button>
+                    </div>
+                </>
+              )}
+          </div>
+      </div>
     )
 }
