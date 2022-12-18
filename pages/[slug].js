@@ -21,13 +21,13 @@ import {Map, YMaps} from "react-yandex-maps";
 export const transport = [
     {
         value: 1,
-        label: 'Фура',
-        price: 400
+        label: 'Рефрижератор',
+        price: 600
     },
     {
         value: 2,
         label: 'Самосвал',
-        price: 27
+        price: 30
     },
     {
         value: 3,
@@ -36,44 +36,39 @@ export const transport = [
     },
     {
         value: 4,
-        label: 'Рефрижератор',
-        price: 500
+        label: 'Изотерм',
+        price: 470
     },
     {
         value: 5,
-        label: 'Изотерм',
-        price: 400
+        label: 'Бортовой',
+        price: 470
     },
     {
         value: 6,
-        label: 'Бортовой',
-        price: 400
+        label: 'Крытый',
+        price: 470
     },
     {
         value: 7,
-        label: 'Крытый',
-        price: 400
-    },
-    {
-        value: 8,
         label: 'Открытый',
-        price: 400
-    },
-    {
-        value: 9,
-        label: 'Тент',
-        price: 400
+        price: 470
     },
     {
         value: 8,
-        label: 'Зерновоз',
-        price: 27
+        label: 'Тент',
+        price: 470
     },
     {
         value: 9,
+        label: 'Зерновоз',
+        price: 35
+    },
+    {
+        value: 10,
         label: 'Газель',
-        price: 180
-    }
+        price: 200
+    },
 ];
 
 export default function createOrders() {

@@ -215,14 +215,14 @@ export default function createDriverOrders() {
         })
         let transportPrice = transportObj[0].price
         if (transportPrice === 27) {
-            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.1);
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
             setPrice(totalPrice + ' ₸');
-            let logPriceCalc = totalPrice*0.1;
+            let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         } else {
-            let totalPrice = corrDistance * transportPrice - ((corrDistance * transportPrice)*0.1);
+            let totalPrice = corrDistance * transportPrice - ((corrDistance * transportPrice)*0.15);
             setPrice(totalPrice + ' ₸');
-            let logPriceCalc = totalPrice*0.1;
+            let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         }
     }

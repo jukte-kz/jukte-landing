@@ -2,12 +2,12 @@ export const transport = [
     {
         value: 1,
         label: 'Рефрижератор',
-        price: 500
+        price: 600
     },
     {
         value: 2,
         label: 'Самосвал',
-        price: 27
+        price: 30
     },
     {
         value: 3,
@@ -17,27 +17,27 @@ export const transport = [
     {
         value: 4,
         label: 'Изотерм',
-        price: 400
+        price: 470
     },
     {
         value: 5,
         label: 'Бортовой',
-        price: 400
+        price: 470
     },
     {
         value: 6,
         label: 'Крытый',
-        price: 400
+        price: 470
     },
     {
         value: 7,
         label: 'Открытый',
-        price: 400
+        price: 470
     },
     {
         value: 8,
         label: 'Тент',
-        price: 400
+        price: 470
     },
     {
         value: 9,
@@ -47,6 +47,6 @@ export const transport = [
     {
         value: 10,
         label: 'Газель',
-        price: 180
+        price: 200
     },
 ];
