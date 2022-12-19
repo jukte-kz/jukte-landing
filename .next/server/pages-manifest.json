@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/createOrders": "pages/createOrders.js",
-  "/home": "pages/home.js",
-  "/[slug]": "pages/[slug].js"
+  "/faqLand": "pages/faqLand.js",
+  "/": "pages/index.js"
 }
