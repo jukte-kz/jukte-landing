@@ -10,8 +10,40 @@ export default function OpenCard({
 }) {
     const [show, setShow] = useState(false);
     const { t } = useTranslation();
+
+    const [timeNow, setTimeNow] = useState('');
+    moment.locale('ru');
+
+    useEffect(() => {
+      setTimeNow(moment(time).fromNow());
+      setInterval(() => {
+        setTimeNow(moment(time).fromNow());
+      }, 60000);
+    });
+
     return (
         <div className="rounded shadow-sm bg-white w-full myCard-container p-4">
+            <div className='mb-2 flex justify-between'>
+              {status === 'open' && (
+                <span
+                  className="bg-green-100 text-green-800 text-xs
+                                     font-semibold mr-2 px-2.5 py-0.5 rounded
+                                     dark:bg-green-200 dark:text-green-900"
+                >
+                              {t("card.cardOpen")}
+                          </span>
+              )}
+              {status === 'inProgress' && (
+                <span
+                  className="bg-yellow-100 text-green-800 text-xs
+                                     font-semibold mr-2 px-2.5 py-0.5 rounded
+                                     dark:bg-yellow-200 dark:text-yellow-900"
+                >
+                              {t("card.cardInProgress")}
+                          </span>
+              )}
+              <p>{timeNow}</p>
+            </div>
             <div className='pb-2 mb-4 border-b-2 flex items-start justify-between'>
                 <div>
                     <div className='flex items-center'>

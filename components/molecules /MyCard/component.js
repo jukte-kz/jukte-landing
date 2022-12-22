@@ -17,6 +17,9 @@ export default function MyCard({
 
     useEffect(() => {
       setTimeNow(moment(time).fromNow());
+      setInterval(() => {
+        setTimeNow(moment(time).fromNow());
+      }, 60000);
     });
     return (
         <div className="rounded shadow-sm bg-white w-full myCard-container p-4">

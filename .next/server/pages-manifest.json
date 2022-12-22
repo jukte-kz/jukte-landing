@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/faqLand": "pages/faqLand.js",
-  "/": "pages/index.js"
+  "/driverOrders": "pages/driverOrders.js",
+  "/home": "pages/home.js"
 }

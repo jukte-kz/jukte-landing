@@ -14,10 +14,13 @@ export default function DriverCard({
     const { t } = useTranslation();
 
     const [timeNow, setTimeNow] = useState('');
-    moment.locale('ru')
+    moment.locale('ru');
 
     useEffect(() => {
       setTimeNow(moment(time).fromNow());
+      setInterval(() => {
+        setTimeNow(moment(time).fromNow());
+      }, 60000);
     });
 
     return (

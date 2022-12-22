@@ -324,6 +324,7 @@ export default function Home () {
                                                     phone={data.ownerPhone}
                                                     id={data._id}
                                                     companyName={data.ownerCompany}
+                                                    time={data.time}
                                                 />
                                             )
                                         })
@@ -380,6 +381,7 @@ export default function Home () {
                                                     transfer2={data.transfer2}
                                                     transfer3={data.transfer3}
                                                     transfer4={data.transfer4}
+                                                    time={data.time}
                                                 />
                                             )
                                         })

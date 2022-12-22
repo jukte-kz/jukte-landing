@@ -113,6 +113,7 @@ export default function driverOrders() {
                                                 transfer2={data.transfer2}
                                                 transfer3={data.transfer3}
                                                 transfer4={data.transfer4}
+                                                time={data.time}
                                             />
                                         )
                                     })

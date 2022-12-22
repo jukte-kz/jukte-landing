@@ -112,6 +112,7 @@ export default function MyOrders() {
                                                 phone={data.ownerPhone}
                                                 id={data._id}
                                                 companyName={data.ownerCompany}
+                                                time={data.time}
                                             />
                                         )
                                     })
