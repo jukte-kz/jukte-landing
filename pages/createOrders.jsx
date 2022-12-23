@@ -189,12 +189,19 @@ export default function createOrders() {
             return obj.label === transportType
         })
         let transportPrice = transportObj[0].price
-        if (transportPrice === 27) {
+        if (transportPrice === 30) {
             let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
-        } else {
+        }
+        if (transportPrice === 35) {
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
+            setPrice(totalPrice + ' ₸');
+            let logPriceCalc = totalPrice*0.15;
+            setLogPrice(logPriceCalc + ' ₸');
+        }
+        else {
             let totalPrice = corrDistance * transportPrice - ((corrDistance * transportPrice)*0.15);
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
