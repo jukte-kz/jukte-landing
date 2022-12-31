@@ -107,7 +107,7 @@ export default function Settings () {
                 setDisabledPhone(true);
             }
         }
-    })
+    }, [])
 
     const sendUserData = () => {
         Cookies.set('carNumber', carNumber);

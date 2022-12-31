@@ -35,8 +35,6 @@ export default function Home () {
     const toAskUser = () => {
         setShowAskUser(!showAskUser);
     }
-    useEffect(()=>{
-    })
 
     const deleteOrder = (orderId) => {
         axios({
@@ -105,7 +103,7 @@ export default function Home () {
                 }
             })
         }
-    })
+    }, [])
 
     useEffect(() => {
         if(!cancelArchive) {
@@ -127,7 +125,7 @@ export default function Home () {
         } else {
             setUserSuccessMessage(t("home.statusUnver"))
         }
-    })
+    }, [])
 
     useEffect(() => {
         if(!cancelOpenOrders) {
@@ -145,7 +143,7 @@ export default function Home () {
                 setCancelOpenOrders(true)
             })
         }
-    })
+    }, [])
 
     return (
         <div>

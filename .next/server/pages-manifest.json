@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/createDriverOrders": "pages/createDriverOrders.js",
-  "/home": "pages/home.js",
-  "/createOrders": "pages/createOrders.js"
+  "/driverOrders": "pages/driverOrders.js"
 }

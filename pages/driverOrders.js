@@ -52,7 +52,7 @@ export default function driverOrders() {
                 setCancelArchive(true)
             })
         }
-    })
+    }, [])
 
     const onPageChange = useCallback(() => {
         const previous = () => {

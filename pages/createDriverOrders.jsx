@@ -135,7 +135,7 @@ export default function createOrders() {
           weight.length > 0 && date &&
           description.length > 0 &&
           parseInt(price.replace(/\s/g, '')) > 0);
-    });
+    }, []);
 
     useEffect(() => {
         if (!cancel) {
@@ -155,7 +155,7 @@ export default function createOrders() {
                 }
             })
         }
-    })
+    }, [])
 
     const nextStep = useCallback(() => {
         setCurrentStep((currentStep) => currentStep + 1);

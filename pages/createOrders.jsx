@@ -138,7 +138,7 @@ export default function createOrders() {
           description.length > 0 &&
           product.length &&
           parseInt(price.replace(/\s/g, '')) > 0);
-    });
+    }, []);
 
     const nextStep = useCallback(() => {
         setCurrentStep((currentStep) => currentStep + 1);

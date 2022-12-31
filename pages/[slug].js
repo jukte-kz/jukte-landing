@@ -156,7 +156,7 @@ export default function refreshOrders() {
                 return obj._id === roud
             }))
         }
-    });
+    }, []);
 
     useEffect(() => {
         if (myOrderRedact) {
@@ -184,7 +184,7 @@ export default function refreshOrders() {
           description.length > 0 &&
           product.length &&
           parseInt(price.replace(/\s/g, '')) > 0);
-    });
+    }, []);
 
     const addRoute = (ymaps) => {
         const multiRoute = new ymaps.multiRouter.MultiRoute(

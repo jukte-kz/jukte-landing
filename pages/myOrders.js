@@ -52,7 +52,7 @@ export default function MyOrders() {
                 setCancelArchive(true)
             })
         }
-    })
+    }, [])
     useEffect(() => {
         if (!cancel) {
             axios({
@@ -79,7 +79,7 @@ export default function MyOrders() {
                 }
             })
         }
-    })
+    }, [])
 
     const onPageChange = useCallback(() => {
         const previous = () => {

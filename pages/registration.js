@@ -130,11 +130,11 @@ export default function Registration () {
         setOtpCheckComplete(
             otp.length === 6
         )
-    })
+    }, [])
 
     return (
         <div>
-            <Header removeUrl='/' mainHeader={true} />
+            <Header removeUrl='https://jukte.kz/' mainHeader={true} />
             <div className='registration-main'>
                 <h1>{t("registration.title")}</h1>
                 <p className='mt-2 mb-6'>

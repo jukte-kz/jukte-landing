@@ -48,7 +48,7 @@ export default function Login() {
 
     useEffect(() => {
         setCheckComplete(phone.length === 18 && password.length > 0)
-    })
+    }, [])
 
     const postLogin = () => {
         axios({
@@ -76,7 +76,7 @@ export default function Login() {
 
     return (
         <div className=''>
-            <Header removeUrl='/' mainHeader={true} />
+            <Header removeUrl='https://jukte.kz/' mainHeader={true} />
             <div className='login-main'>
                 <h1>{t("login.title")}</h1>
                 <p className='mt-2'>{t("login.desc")} <span>Jukte.kz</span></p>

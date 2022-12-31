@@ -38,7 +38,7 @@ export default function MyOrders() {
                 setCancelArchive(true)
             })
         }
-    })
+    }, [])
 
     const matchOrder = (orderID) => {
         axios({
