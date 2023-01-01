@@ -130,7 +130,7 @@ export default function Registration () {
         setOtpCheckComplete(
             otp.length === 6
         )
-    }, [])
+    });
 
     return (
         <div>

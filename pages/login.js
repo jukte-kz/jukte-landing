@@ -48,7 +48,7 @@ export default function Login() {
 
     useEffect(() => {
         setCheckComplete(phone.length === 18 && password.length > 0)
-    }, [])
+    })
 
     const postLogin = () => {
         axios({
