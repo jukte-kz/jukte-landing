@@ -24,7 +24,6 @@ export default function Registration () {
     const [password, setPassword] = useState('');
     const [transportType, setTransportType] = useState('');
     const [role, setRole] = useState('');
-    const [lawData, setLawData] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errMessage, setErrMesage] = useState('');
     const [checkComplete, setCheckComplete] = useState(false);
@@ -32,7 +31,6 @@ export default function Registration () {
     const [showModal, setShowModal] = useState(false);
     const [successText, setSuccessText] = useState(false);
     const [showTeleErr, setShowTeleErr] = useState(false);
-    const [showLaw, setShowLaw] = useState(false);
 
     const router = useRouter();
     const { t } = useTranslation();
@@ -64,9 +62,7 @@ export default function Registration () {
     const onChangeRole = (e) => {
         setRole(e.target.value)
     }
-    const onChangeLawData = () => {
-        setLawData(!lawData)
-    }
+
     const toEndRegister = () => {
         setShowModal(false);
         router.push('/login');
@@ -156,7 +152,8 @@ export default function Registration () {
                             <label htmlFor="bordered-radio-0"
                                    className="py-4 ml-4 w-full text-md font-medium dark:text-gray-300">
                                 {t("registration.confirm")} <br/>
-                                <p onClick={() => {router.push('/lawPage')}} className="mt-2 text-link underline">{t("registration.lawLink")}</p>
+                                <a href="/assets/doc/law.pdf" download
+                                   className="mt-2 text-link underline">{t("registration.lawLink")}</a>
                             </label>
                         </div>
                     </div>

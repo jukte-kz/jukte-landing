@@ -138,7 +138,7 @@ export default function createOrders() {
           description.length > 0 &&
           product.length &&
           parseInt(price.replace(/\s/g, '')) > 0);
-    }, []);
+    }, );
 
     const nextStep = useCallback(() => {
         setCurrentStep((currentStep) => currentStep + 1);
@@ -323,7 +323,17 @@ export default function createOrders() {
                           }}
                         >{t("createOrders.refresh")}</button>
                     </div>
-                    <div className='mt-8 rounded'>
+                    <div className="mt-4">
+                        <button
+                          type='button'
+                          className="settings-button"
+                          disabled={!distance}
+                          onClick={nextStep}
+                        >
+                            <p className="w-full">{t("createOrders.next")}</p>
+                        </button>
+                    </div>
+                    <div className='rounded mt-4'>
                         {refreshMap ? (
                           <YMaps query={{apikey: '0fb09044-5132-48a3-8653-02425b40b298', load: "package.full"}} >
                               <Map onLoad={addRoute} instanceRef={map} defaultState={{
@@ -338,16 +348,6 @@ export default function createOrders() {
                               <Spinner size={"xl"}></Spinner>
                           </div>
                         )}
-                    </div>
-                    <div className="mt-8">
-                        <button
-                          type='button'
-                          className="settings-button"
-                          disabled={!distance}
-                          onClick={nextStep}
-                        >
-                            <p className="w-full">{t("createOrders.next")}</p>
-                        </button>
                     </div>
                 </>
               )}
