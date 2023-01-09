@@ -190,19 +190,19 @@ export default function createOrders() {
         })
         let transportPrice = transportObj[0].price
         if (transportPrice === 30) {
-            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         }
         if (transportPrice === 35) {
-            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         }
         else {
-            let totalPrice = corrDistance * transportPrice - ((corrDistance * transportPrice)*0.15);
+            let totalPrice = corrDistance * transportPrice;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
@@ -546,22 +546,6 @@ export default function createOrders() {
                           disabled
                           id="price"
                           value={price}
-                          placeholder='0 ₸'
-                          required={true}
-                          sizing="md"
-                        />
-                    </div>
-                    <div className='input-container mt-4'>
-                        <div className="mb-2 block">
-                            <Label
-                              htmlFor="price"
-                              value={t("createOrders.priceLogistician")}
-                            />
-                        </div>
-                        <TextInput
-                          disabled
-                          id="price"
-                          value={logPrice}
                           placeholder='0 ₸'
                           required={true}
                           sizing="md"

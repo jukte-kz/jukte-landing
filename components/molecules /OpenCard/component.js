@@ -64,7 +64,7 @@ export default function OpenCard({
                     <div className='flex flex-col gap-2'>
                         <div className='flex items-center'>
                             <img className='mr-2' src="/assets/icon/tenge.svg" alt=""/>
-                            <h1>{t("createOrders.price")}: {price} ₸ <br/> {t("card.priceLog")}: {logPrice} ₸</h1>
+                            <h1>{t("createOrders.price")}: {price} ₸</h1>
                         </div>
                         <div className='flex items-center'>
                             <img className='mr-2' src="/assets/icon/weight.svg" alt=""/>

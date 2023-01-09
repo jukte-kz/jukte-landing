@@ -151,12 +151,13 @@ export default function refreshOrders() {
 
     useEffect(() => {
         setRoud(router.asPath.replace('/',''));
+        console.log(router.asPath.replace('/',''));
         if (roud) {
             setMyOrderRedact(myOrders.find(obj => {
                 return obj._id === roud
             }))
         }
-    }, []);
+    });
 
     useEffect(() => {
         if (myOrderRedact) {
@@ -182,9 +183,8 @@ export default function refreshOrders() {
         setCheckSendOrder(
           weight.length > 0 && date &&
           description.length > 0 &&
-          product.length &&
           parseInt(price.replace(/\s/g, '')) > 0);
-    }, []);
+    });
 
     const addRoute = (ymaps) => {
         const multiRoute = new ymaps.multiRouter.MultiRoute(
@@ -263,18 +263,18 @@ export default function refreshOrders() {
         })
         let transportPrice = transportObj[0].price
         if (transportPrice === 30) {
-            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         } if (transportPrice === 35) {
-            let totalPrice = transportPrice * parseFloat(weight) * corrDistance - ((transportPrice * parseFloat(weight) * corrDistance)*0.15);
+            let totalPrice = transportPrice * parseFloat(weight) * corrDistance;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
         }
         else {
-            let totalPrice = corrDistance * transportPrice - ((corrDistance * transportPrice)*0.15);
+            let totalPrice = corrDistance * transportPrice;
             setPrice(totalPrice + ' ₸');
             let logPriceCalc = totalPrice*0.15;
             setLogPrice(logPriceCalc + ' ₸');
@@ -621,22 +621,6 @@ export default function refreshOrders() {
                           disabled
                           id="price"
                           value={price}
-                          placeholder='0 ₸'
-                          required={true}
-                          sizing="md"
-                        />
-                    </div>
-                    <div className='input-container mt-4'>
-                        <div className="mb-2 block">
-                            <Label
-                              htmlFor="price"
-                              value={t("createOrders.priceLogistician")}
-                            />
-                        </div>
-                        <TextInput
-                          disabled
-                          id="price"
-                          value={logPrice}
                           placeholder='0 ₸'
                           required={true}
                           sizing="md"
