@@ -11,7 +11,6 @@ import Select from "react-select";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import '../utils/i18next';
-import Link from "next/link";
 
 export default function Registration () {
     const phoneMask = '+7-(999)-999-99-99';
@@ -58,6 +57,13 @@ export default function Registration () {
     const onChangeSelect = (e) => {
         setTransportType(e.label)
     }
+
+    useEffect(() => {
+        const API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiQVBJIEtFWSIsImV4cCI6MjI3NzY5OTgxNSwiaWF0IjoxNjcyODk5ODE1LCJqdGkiOiJjYzczM2IwYzA1MTU0YjljOGFmYWVjMzg2YTFhMzU3ZCIsIm9yZ2FuaXphdGlvbl9pZCI6IjYzZjAyMDMzLTBmZmMtNGZmMC04OTJmLTA2MGM2YTAxNjg2OSJ9.40wz3ZgS9i64FvXh2GeQjgKs3jNIB7HjL3OA5oXZgdU'
+        const BVResult = BiometricPackage.init({
+            API_KEY: API_KEY
+        })
+    }, [])
 
     const onChangeRole = (e) => {
         setRole(e.target.value)
@@ -131,6 +137,7 @@ export default function Registration () {
     return (
         <div>
             <Header removeUrl='https://jukte.kz/' mainHeader={true} />
+            <div id="biometric-verification" className='bg-gray-600'></div>
             <div className='registration-main'>
                 <h1>{t("registration.title")}</h1>
                 <p className='mt-2 mb-6'>
@@ -248,7 +255,9 @@ export default function Registration () {
                                     <TextInput
                                         {...inputProps}
                                         id="password"
-                                        type="password"
+                                        type="tel"
+                                        pattern="[0-9]*"
+                                        inputMode="numeric"
                                         placeholder={t("login.password")}
                                         required={true}
                                         sizing="lg"
